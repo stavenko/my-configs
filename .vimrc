@@ -17,6 +17,7 @@ Bundle 'scrooloose/nerdtree'
 Plugin 'wting/rust.vim'
 Bundle 'zah/nimrod.vim'
 Bundle 'tpope/vim-fugitive'
+Bundle 'fholgado/minibufexpl.vim'
 call vundle#end()
 
 filetype plugin indent on    " required
@@ -46,6 +47,8 @@ colorscheme distinguished
 
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+autocmd VimEnter * :MBEOpen 
+autocmd VimEnter * :NERDTree
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
 let g:syntastic_javascript_checkers = ['jscs']
@@ -61,3 +64,10 @@ imap <F10> <ESC>:q!<CR>
 
 map <F2> :w<CR>
 imap <F2> <ESC>:w<CR>
+
+map <F3> :MBEFocus <CR>
+imap <F3> <ESC>:MBEFocus <CR>
+
+map <F9> :MBEbw <CR>
+imap <F9> <ESC>:MBEbw <CR>
+
