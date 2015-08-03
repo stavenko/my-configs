@@ -18,6 +18,7 @@ Plugin 'wting/rust.vim'
 Bundle 'zah/nimrod.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'fholgado/minibufexpl.vim'
+Plugin 'wincent/command-t'
 call vundle#end()
 
 filetype plugin indent on    " required
@@ -51,7 +52,8 @@ autocmd VimEnter * :MBEOpen
 autocmd VimEnter * :NERDTree
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
-let g:syntastic_javascript_checkers = ['jscs']
+let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
