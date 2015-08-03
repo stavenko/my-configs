@@ -19,6 +19,8 @@ Bundle 'zah/nimrod.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'fholgado/minibufexpl.vim'
 Plugin 'wincent/command-t'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 call vundle#end()
 
 filetype plugin indent on    " required
