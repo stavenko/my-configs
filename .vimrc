@@ -48,12 +48,16 @@ set backspace=indent,eol,start
 
 colorscheme distinguished
 
-let g:indent_guides_auto_colors = 0
+let g:indent_guides_auto_colors=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 autocmd VimEnter * :MBEOpen 
 autocmd VimEnter * :NERDTree
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+au BufWinEnter * let w:m1=matchadd('Search', '\%<81v.\%>77v', -1)
+au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
+set colorcolumn=+1
+highlight ColorColumn ctermbg=lightred guibg=lightred
 let g:syntastic_javascript_checkers = ['jshint', 'jscs']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 1
