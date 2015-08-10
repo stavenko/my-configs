@@ -21,6 +21,8 @@ Bundle 'fholgado/minibufexpl.vim'
 Plugin 'wincent/command-t'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'tpope/vim-surround.git'
+Plugin 'tpope/vim-repeat'
 call vundle#end()
 
 filetype plugin indent on    " required
@@ -66,6 +68,8 @@ let g:ycm_confirm_extra_conf=0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 set completeopt-=preview
+
+set directory=./.backup//,/tmp//,.
 
 map <F10> :q!<CR>
 imap <F10> <ESC>:q!<CR>
