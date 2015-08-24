@@ -36,6 +36,7 @@ set tabstop=4
 set number
 
 autocmd FileType JavaScript setl shiftwidth=2 tabstop=2
+autocmd FileType cpp setl shiftwidth=2 tabstop=2
 
 vnoremap > >gv
 vnoremap < <gv
@@ -57,6 +58,10 @@ autocmd VimEnter * :MBEOpen
 autocmd VimEnter * :NERDTree
 au BufWinEnter * let w:m1=matchadd('Search', '\%<81v.\%>77v', -1)
 au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+
+" c++
+au FileType cpp set makeprg=make\ -j9
+au FileType cpp nnoremap <F4> :make!<cr>
 
 set colorcolumn=+1
 highlight ColorColumn ctermbg=lightred guibg=lightred
