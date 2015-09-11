@@ -1,0 +1,16 @@
+{
+    "requireCurlyBraces": ["do", "try", "catch"],
+    "disallowCurlyBraces": ["if", "else", "for", "while"],
+    "requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch"],
+    "requireRightStickedOperators": ["!"],
+    "requireLeftStickedOperators": [","],
+    "disallowImplicitTypeConversion": ["string"],
+    "disallowMultipleLineBreaks": true,
+    "disallowKeywordsOnNewLine": ["else"],
+    "excludeFiles": [],
+    "validateJSDoc": {
+        "checkParamNames": true,
+        "requireParamTypes": true
+    },
+    "maximumLineLength":80
+}

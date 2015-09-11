@@ -54,10 +54,10 @@ colorscheme distinguished
 let g:indent_guides_auto_colors=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
-autocmd VimEnter * :MBEOpen 
-autocmd VimEnter * :NERDTree
+"autocmd VimEnter * :MBEOpen 
+"autocmd VimEnter * :NERDTree
 au BufWinEnter * let w:m1=matchadd('Search', '\%<81v.\%>77v', -1)
-au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+" au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
 " c++
 au FileType cpp set makeprg=make\ -j9
@@ -88,3 +88,9 @@ imap <F3> <ESC>:MBEFocus <CR>
 map <F9> :MBEbw <CR>
 imap <F9> <ESC>:MBEbw <CR>
 
+" Navigation 
+"
+noremap <C-Down>  <C-W>j
+noremap <C-Up>    <C-W>k
+noremap <C-Left>  <C-W>h
+noremap <C-Right> <C-W>l
