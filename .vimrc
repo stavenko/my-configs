@@ -23,6 +23,10 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'tpope/vim-surround.git'
 Plugin 'tpope/vim-repeat'
+Bundle 'rdnetto/YCM-Generator'
+Plugin 'vim-scripts/L9'
+Plugin 'vim-scripts/FuzzyFinder'
+Plugin 'SkidanovAlex/CtrlK'
 call vundle#end()
 
 filetype plugin indent on    " required
@@ -65,13 +69,21 @@ au FileType cpp nnoremap <F4> :make!<cr>
 
 set colorcolumn=+1
 highlight ColorColumn ctermbg=lightred guibg=lightred
+
+let g:ctrlk_clang_library_path="/usr/lib/llvm-3.6/lib/"
 let g:syntastic_javascript_checkers = ['jshint', 'jscs']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_cpp_include_dirs=["../include","include", '.', '..','/usr/include/nodejs/src/' ]
+let g:syntastic_cpp_compiler_options='-std=c++11 -stdlib=libc++'
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+nmap <F3> :call GetCtrlKState()<CR>
+nmap <C-k> :call CtrlKNavigateSymbols()<CR>
+nmap <F2> :call CtrlKGoToDefinition()<CR>
+nmap <F12> :call CtrlKGetReferences()<CR>
 set completeopt-=preview
 
 set directory=./.backup//,/tmp//,.
