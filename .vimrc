@@ -5,7 +5,7 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
-Bundle "pangloss/vim-javascript"
+Bundle 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'moll/vim-node'
@@ -27,6 +27,9 @@ Bundle 'rdnetto/YCM-Generator'
 Plugin 'vim-scripts/L9'
 Plugin 'vim-scripts/FuzzyFinder'
 Plugin 'SkidanovAlex/CtrlK'
+Plugin 'mxw/vim-jsx'
+Plugin 'rhysd/vim-clang-format'
+
 call vundle#end()
 
 filetype plugin indent on    " required
@@ -39,7 +42,8 @@ set shiftwidth=4
 set tabstop=4
 set number
 
-autocmd FileType JavaScript setl shiftwidth=2 tabstop=2
+
+autocmd FileType javascript setl shiftwidth=2 tabstop=2
 autocmd FileType cpp setl shiftwidth=2 tabstop=2
 
 vnoremap > >gv
@@ -71,15 +75,18 @@ set colorcolumn=+1
 highlight ColorColumn ctermbg=lightred guibg=lightred
 
 let g:ctrlk_clang_library_path="/usr/lib/llvm-3.6/lib/"
-let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_cpp_include_dirs=["../include","include", '.', '..','/usr/include/nodejs/src/' ]
 let g:syntastic_cpp_compiler_options='-std=c++11 -stdlib=libc++'
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'                      
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:clang_format#command='clang-format-3.4'
 nmap <F3> :call GetCtrlKState()<CR>
 nmap <C-k> :call CtrlKNavigateSymbols()<CR>
 nmap <F2> :call CtrlKGoToDefinition()<CR>
