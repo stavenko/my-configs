@@ -109,3 +109,4 @@ ON_IWHITE='\e[0;107m'   # White
 PS1="\[$GREEN\]\t\[$RED\]-\[$BLUE\]\u\[$YELLOW\]\[$YELLOW\]\w\[\033[m\]\[$MAGENTA\]\$(__git_ps1)\[$WHITE\]\$ "
 alias evim="vim +MBEOpen +NERDTree"
 
+PATH=($PATH):/usr/local/MATLAB/R2013a/bin/
