@@ -35,44 +35,44 @@ import ycm_core
 # compilation database set (by default, one is not set).
 # CHANGE THIS LIST OF FLAGS. YES, THIS IS THE DROID YOU HAVE BEEN LOOKING FOR.
 flags = [
-    '-Wall',
-    '-Wextra',
-    '-Werror',
-    # '-Wc++98-compat',
-    '-Wno-long-long',
-    '-Wno-variadic-macros',
+    '-wall',
+    '-wextra',
+    '-werror',
+    # '-wc++98-compat',
+    '-wno-long-long',
+    '-wno-variadic-macros',
     '-fexceptions',
-    '-DNDEBUG',
-    # You 100% do NOT need -DUSE_CLANG_COMPLETER in your flags; only the YCM
+    '-dndebug',
+    # you 100% do not need -duse_clang_completer in your flags; only the ycm
     # source code needs it.
-    '-DUSE_CLANG_COMPLETER',
-    # THIS IS IMPORTANT! Without a "-std=<something>" flag, clang won't know which
-    # language to use when compiling headers. So it will guess. Badly. So C++
-    # headers will be compiled as C headers. You don't want that so ALWAYS specify
+    '-duse_clang_completer',
+    # this is important! without a "-std=<something>" flag, clang won't know which
+    # language to use when compiling headers. so it will guess. badly. so c++
+    # headers will be compiled as c headers. you don't want that so always specify
     # a "-std=<something>".
-    # For a C project, you would set this to something like 'c99' instead of
+    # for a c project, you would set this to something like 'c99' instead of
     # 'c++11'.
     '-std=c++11',
     # ...and the same thing goes for the magic -x option which specifies the
-    # language that the files to be compiled are written in. This is mostly
+    # language that the files to be compiled are written in. this is mostly
     # relevant for c++ headers.
-    # For a C project, you would set this to 'c' instead of 'c++'.
+    # for a c project, you would set this to 'c' instead of 'c++'.
     '-x',
     'c++',
     '-isystem',
-    '../BoostParts',
+    '../boostparts',
     '-isystem',
-    # This path will only work on OS X, but extra paths that don't exist are not
+    # this path will only work on os x, but extra paths that don't exist are not
     # harmful
-    '/System/Library/Frameworks/Python.framework/Headers',
+    '/system/library/frameworks/python.framework/headers',
     '-isystem',
     '../llvm/include',
     '-isystem',
     '../llvm/tools/clang/include',
-    '-I',
-    '.',
-    '-I',
-    './ClangCompleter',
+    '-I/usr/include/nodejs/src',
+    '-I./',
+    '-isystem',
+    './clangcompleter',
     '-isystem',
     './tests/gmock/gtest',
     '-isystem',
@@ -80,9 +80,7 @@ flags = [
     '-isystem',
     './tests/gmock',
     '-isystem',
-    './tests/gmock/include',
-    '-isystem ',
-    '/usr/include/nodejs/src/'
+    './tests/gmock/include'
     ]
 
 """
@@ -113,5 +111,5 @@ def FlagsForFile( filename, **kwargs ):
 
   return {
     'flags': flags,
-    'do_cache': True
+    'do_cache': False
   }

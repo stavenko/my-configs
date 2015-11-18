@@ -14,10 +14,10 @@ Bundle 'Valloric/YouCompleteMe'
 Bundle 'marijnh/tern_for_vim'
 Plugin 'elzr/vim-json'
 Bundle 'scrooloose/nerdtree'
+Bundle 'jistr/vim-nerdtree-tabs'
 Plugin 'wting/rust.vim'
 Bundle 'zah/nimrod.vim'
 Bundle 'tpope/vim-fugitive'
-Bundle 'fholgado/minibufexpl.vim'
 Plugin 'wincent/command-t'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
@@ -91,6 +91,7 @@ let g:syntastic_check_on_wq = 0
 let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'                      
 let g:ycm_confirm_extra_conf=0
 let g:ycm_add_preview_to_completeopt=1
+let g:ycm_server_use_vim_stdout=0
 let g:ycm_server_log_level='debug'
 
 let g:clang_format#command='clang-format-3.4'
@@ -120,3 +121,22 @@ noremap <C-Down>  <C-W>j
 noremap <C-Up>    <C-W>k
 noremap <C-Left>  <C-W>h
 noremap <C-Right> <C-W>l
+
+" Vim tabs navigation"
+
+map <C-S-]> gt
+map <C-S-[> gT
+map <C-1> 1gt
+map <C-2> 2gt
+map <C-3> 3gt
+map <C-4> 4gt
+map <C-5> 5gt
+map <C-6> 6gt
+map <C-7> 7gt
+map <C-8> 8gt
+map <C-9> 9gt
+map <C-0> :tablast<CR>
+map <C-n> :NERDTreeMirrorToggle<CR>
+map <C-f> :NERDTreeTabsFind<CR>
+map <C-t> :tabnew<CR>
+
