@@ -9,7 +9,6 @@ Bundle 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'moll/vim-node'
-Bundle 'scrooloose/syntastic'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'marijnh/tern_for_vim'
 Plugin 'elzr/vim-json'
@@ -76,25 +75,14 @@ highlight ColorColumn ctermbg=lightred guibg=lightred
 
 let g:ctrlk_clang_library_path="/usr/lib/llvm-3.6/lib/"
 
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list = 1
-
-let g:syntastic_cpp_compiler='clang'
-let g:syntastic_cpp_include_dirs=["../include","include", '.', '..','/usr/include/nodejs/src/' ]
-let g:syntastic_cpp_compiler_options='-c -std=c++14 -xc++'
-let g:syntastic_cpp_checkers=['clang_check', 'gcc']
-let g:syntastic_cpp_check_header=1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'                      
-let g:ycm_confirm_extra_conf=0
+let g:ycm_confirm_extra_conf=1
 let g:ycm_add_preview_to_completeopt=1
 let g:ycm_server_use_vim_stdout=0
 let g:ycm_server_log_level='debug'
 
-let g:clang_format#command='clang-format-3.4'
+let g:clang_format#command='clang-format'
 nmap <F3> :call GetCtrlKState()<CR>
 nmap <C-k> :call CtrlKNavigateSymbols()<CR>
 nmap <F2> :call CtrlKGoToDefinition()<CR>
