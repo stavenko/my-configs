@@ -28,6 +28,7 @@ Plugin 'vim-scripts/FuzzyFinder'
 Plugin 'SkidanovAlex/CtrlK'
 Plugin 'mxw/vim-jsx'
 Plugin 'rhysd/vim-clang-format'
+Plugin 'tikhomirov/vim-glsl'
 
 call vundle#end()
 
