@@ -25,10 +25,12 @@ Plugin 'tpope/vim-repeat'
 Bundle 'rdnetto/YCM-Generator'
 Plugin 'vim-scripts/L9'
 Plugin 'vim-scripts/FuzzyFinder'
-Plugin 'SkidanovAlex/CtrlK'
 Plugin 'mxw/vim-jsx'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'tikhomirov/vim-glsl'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags'
+Plugin 'majutsushi/tagbar'
 
 call vundle#end()
 
@@ -62,10 +64,7 @@ colorscheme distinguished
 let g:indent_guides_auto_colors=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
-"autocmd VimEnter * :MBEOpen 
-"autocmd VimEnter * :NERDTree
 au BufWinEnter * let w:m1=matchadd('Search', '\%<81v.\%>77v', -1)
-" au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
 " c++
 au FileType cpp set makeprg=make\ -j9
@@ -79,9 +78,6 @@ let g:ctrlk_clang_library_path="/usr/lib/llvm-3.6/lib/"
 
 let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'                      
 let g:ycm_confirm_extra_conf=1
-let g:ycm_add_preview_to_completeopt=1
-let g:ycm_server_use_vim_stdout=0
-let g:ycm_server_log_level='debug'
 
 let g:clang_format#command='clang-format'
 nmap <F3> :call GetCtrlKState()<CR>
@@ -98,12 +94,6 @@ imap <F10> <ESC>:q!<CR>
 map <F2> :w<CR>
 imap <F2> <ESC>:w<CR>
 
-map <F3> :MBEFocus <CR>
-imap <F3> <ESC>:MBEFocus <CR>
-
-map <F9> :MBEbw <CR>
-imap <F9> <ESC>:MBEbw <CR>
-
 " Navigation 
 "
 noremap <C-Down>  <C-W>j
@@ -113,19 +103,6 @@ noremap <C-Right> <C-W>l
 
 " Vim tabs navigation"
 
-map <C-S-]> gt
-map <C-S-[> gT
-map <C-1> 1gt
-map <C-2> 2gt
-map <C-3> 3gt
-map <C-4> 4gt
-map <C-5> 5gt
-map <C-6> 6gt
-map <C-7> 7gt
-map <C-8> 8gt
-map <C-9> 9gt
-map <C-0> :tablast<CR>
 map <C-n> :NERDTreeMirrorToggle<CR>
 map <C-f> :NERDTreeTabsFind<CR>
-map <C-t> :tabnew<CR>
 
