@@ -4,13 +4,11 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-Plugin 'flazz/vim-colorschemes'
-Bundle 'pangloss/vim-javascript'
-Plugin 'jelera/vim-javascript-syntax'
+Plugin 'isRuslan/vim-es6'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'moll/vim-node'
+Plugin 'altercation/vim-colors-solarized'
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'marijnh/tern_for_vim'
 Plugin 'elzr/vim-json'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
@@ -28,9 +26,12 @@ Plugin 'vim-scripts/FuzzyFinder'
 Plugin 'mxw/vim-jsx'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'tikhomirov/vim-glsl'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
 Plugin 'majutsushi/tagbar'
+Plugin 'ternjs/tern_for_vim'
+Plugin 'krisajenkins/vim-projectlocal'
+set exrc
+
+cd $HOME/projects
 
 call vundle#end()
 
@@ -45,7 +46,7 @@ set tabstop=4
 set number
 
 
-autocmd FileType javascript setl shiftwidth=2 tabstop=2
+autocmd FileType javascript setl shiftwidth=4 tabstop=4
 autocmd FileType cpp setl shiftwidth=2 tabstop=2
 
 vnoremap > >gv
@@ -58,11 +59,19 @@ set t_Co=256
 syntax on
 
 set backspace=indent,eol,start
+set background=dark
+set backupcopy=yes
 
-colorscheme distinguished
+colorscheme solarized
+set guifont=Consolas\ 10
+set guioptions-=T
+set guioptions-=r
+set guioptions-=L
 
 let g:indent_guides_auto_colors=0
+let g:solarized_termcolors=255
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 au BufWinEnter * let w:m1=matchadd('Search', '\%<81v.\%>77v', -1)
 
@@ -71,7 +80,8 @@ au FileType cpp set makeprg=make\ -j9
 au FileType cpp nnoremap <F4> :make!<cr>
 
 set colorcolumn=+1
-highlight ColorColumn ctermbg=lightred guibg=lightred
+highlight ColorColumn
+set textwidth=80
 
 let g:ctrlk_clang_library_path="/usr/lib/llvm-3.6/lib/"
 
@@ -105,4 +115,3 @@ noremap <C-Right> <C-W>l
 
 map <C-n> :NERDTreeMirrorToggle<CR>
 map <C-f> :NERDTreeTabsFind<CR>
-
