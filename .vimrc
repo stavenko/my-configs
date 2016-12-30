@@ -73,7 +73,6 @@ let g:solarized_termcolors=255
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
-au BufWinEnter * let w:m1=matchadd('Search', '\%<81v.\%>77v', -1)
 
 " c++
 au FileType cpp set makeprg=make\ -j9
