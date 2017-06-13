@@ -17,6 +17,7 @@ Bundle 'zah/nimrod.vim'
 Bundle 'tpope/vim-fugitive'
 Plugin 'wincent/command-t'
 Plugin 'godlygeek/tabular'
+Plugin 'tikhomirov/vim-glsl'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'tpope/vim-surround.git'
 Plugin 'tpope/vim-repeat'
@@ -25,7 +26,6 @@ Plugin 'vim-scripts/L9'
 Plugin 'vim-scripts/FuzzyFinder'
 Plugin 'mxw/vim-jsx'
 Plugin 'rhysd/vim-clang-format'
-Plugin 'tikhomirov/vim-glsl'
 Plugin 'majutsushi/tagbar'
 Plugin 'ternjs/tern_for_vim'
 Plugin 'krisajenkins/vim-projectlocal'
@@ -63,7 +63,7 @@ set background=dark
 set backupcopy=yes
 
 colorscheme solarized
-set guifont=Consolas\ 10
+"set guifont=Consolas\ 10
 set guioptions-=T
 set guioptions-=r
 set guioptions-=L
@@ -109,6 +109,11 @@ noremap <C-Down>  <C-W>j
 noremap <C-Up>    <C-W>k
 noremap <C-Left>  <C-W>h
 noremap <C-Right> <C-W>l
+inoremap <esc> <nop>
+inoremap jj <esc>
+inoremap jk <esc>
+noremap <S-Enter> O<esc>
+noremap <CR> o<esc>
 
 " Vim tabs navigation"
 
