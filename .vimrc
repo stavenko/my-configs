@@ -46,7 +46,7 @@ set tabstop=4
 set number
 
 
-autocmd FileType javascript setl shiftwidth=4 tabstop=4
+autocmd FileType javascript setl shiftwidth=2 tabstop=2
 autocmd FileType cpp setl shiftwidth=2 tabstop=2
 
 vnoremap > >gv
@@ -117,5 +117,5 @@ noremap <CR> o<esc>
 
 " Vim tabs navigation"
 
-map <C-n> :NERDTreeMirrorToggle<CR>
-map <C-f> :NERDTreeTabsFind<CR>
+map <leader>n :NERDTreeMirrorToggle<CR>
+map <leader>f :NERDTreeTabsFind<CR>
