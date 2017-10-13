@@ -8,6 +8,7 @@ Plugin 'isRuslan/vim-es6'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'moll/vim-node'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-syntastic/syntastic'
 Bundle 'Valloric/YouCompleteMe'
 Plugin 'elzr/vim-json'
 Bundle 'scrooloose/nerdtree'
@@ -29,6 +30,8 @@ Plugin 'rhysd/vim-clang-format'
 Plugin 'majutsushi/tagbar'
 Plugin 'ternjs/tern_for_vim'
 Plugin 'krisajenkins/vim-projectlocal'
+Plugin 'leafgarland/typescript-vim'
+
 set exrc
 
 cd $HOME/projects
@@ -61,6 +64,7 @@ syntax on
 set backspace=indent,eol,start
 set background=dark
 set backupcopy=yes
+set foldmethod=indent
 
 colorscheme solarized
 "set guifont=Consolas\ 10
@@ -68,8 +72,16 @@ set guioptions-=T
 set guioptions-=r
 set guioptions-=L
 
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+
 let g:indent_guides_auto_colors=0
 let g:solarized_termcolors=255
+let g:syntastic_check_on_open=1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_javascript_checkers=['eslint']
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
@@ -109,11 +121,7 @@ noremap <C-Down>  <C-W>j
 noremap <C-Up>    <C-W>k
 noremap <C-Left>  <C-W>h
 noremap <C-Right> <C-W>l
-inoremap <esc> <nop>
-inoremap jj <esc>
-inoremap jk <esc>
-noremap <S-Enter> O<esc>
-noremap <CR> o<esc>
+inoremap § <esc>
 
 " Vim tabs navigation"
 
