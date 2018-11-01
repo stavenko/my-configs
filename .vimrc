@@ -13,7 +13,6 @@ Bundle 'Valloric/YouCompleteMe'
 Plugin 'elzr/vim-json'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
-Plugin 'wting/rust.vim'
 Bundle 'zah/nimrod.vim'
 Bundle 'tpope/vim-fugitive'
 Plugin 'wincent/command-t'
@@ -25,12 +24,15 @@ Plugin 'tpope/vim-repeat'
 Bundle 'rdnetto/YCM-Generator'
 Plugin 'vim-scripts/L9'
 Plugin 'vim-scripts/FuzzyFinder'
-Plugin 'mxw/vim-jsx'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'majutsushi/tagbar'
 Plugin 'ternjs/tern_for_vim'
 Plugin 'krisajenkins/vim-projectlocal'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'rust-lang/rust.vim'
+Plugin 'yegappan/grep'
+Plugin 'racer-rust/vim-racer'
+Plugin 'Quramy/tsuquyomi'
 
 set exrc
 
@@ -39,8 +41,8 @@ cd $HOME/projects
 call vundle#end()
 
 filetype plugin indent on    " required
-
 filetype plugin on
+
 set expandtab
 set cindent
 
@@ -49,8 +51,10 @@ set tabstop=4
 set number
 
 
+autocmd FileType typescript setl shiftwidth=2 tabstop=2
 autocmd FileType javascript setl shiftwidth=2 tabstop=2
 autocmd FileType cpp setl shiftwidth=2 tabstop=2
+autocmd FileType rust setl shiftwidth=2 tabstop=2
 
 vnoremap > >gv
 vnoremap < <gv
@@ -67,7 +71,7 @@ set backupcopy=yes
 set foldmethod=indent
 
 colorscheme solarized
-"set guifont=Consolas\ 10
+set guifont=Menlo\ Regular:h14
 set guioptions-=T
 set guioptions-=r
 set guioptions-=L
@@ -75,20 +79,38 @@ set guioptions-=L
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
-
+let Grep_Default_Filelist = '*.c *.cpp *.asm *.js *.ts *.jsx' 
+let Grep_Skip_Dirs = 'node_modules .git' 
 
 let g:indent_guides_auto_colors=0
 let g:solarized_termcolors=255
 let g:syntastic_check_on_open=1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_javascript_checkers=['eslint']
+let g:syntastic_typescript_checkers=['tsuquyomi']
+let g:syntastic_javascript_eslint_exe='npx eslint'
+let g:syntastic_rust_checkers=['cargo']
+let g:syntastic_debug=0
+let g:rustc_path = $HOME."/.cargo/bin/rustc"
+let g:racer_cmd="~/.cargo/bin/racer"
+let g:tsuquyomi_disable_default_mappings=1
+let g:tsuquyomi_disable_quickfix=1
+let g:tsuquyomi_ignore_missing_modules=1
+
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+autocmd User fugitive command! -bar -buffer -nargs=* Gcm :Gcommit --no-verify
 
 " c++
 au FileType cpp set makeprg=make\ -j9
 au FileType cpp nnoremap <F4> :make!<cr>
+
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
+au FileType typescript map ˆ :TsuDefinition <CR>
 
 set colorcolumn=+1
 highlight ColorColumn
@@ -108,6 +130,7 @@ nmap <F12> :call CtrlKGetReferences()<CR>
 set completeopt-=preview
 
 set directory=./.backup//,/tmp//,.
+
 
 map <F10> :q!<CR>
 imap <F10> <ESC>:q!<CR>
