@@ -4,64 +4,172 @@ filetype off                  " required
 set rtp+=~/.config/nvim/bundle/Vundle.vim
 let vimDir = '$HOME/.config/nvim'
 let &runtimepath .= ',' . expand(vimDir . '/bundle/Vundle.vim')
-call vundle#rc(expand(vimDir . '/bundle'))
 
-call vundle#begin()
+"call vundle#rc(expand(vimDir . '/bundle'))
 
-Plugin 'gmarik/Vundle.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'rafi/awesome-vim-colorschemes'
-Plugin 'HerringtonDarkholme/yats.vim'
-Plugin 'mhartington/nvim-typescript'
-Plugin 'Shougo/deoplete.nvim'
-Bundle 'tpope/vim-fugitive'
-Plugin 'tikhomirov/vim-glsl'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'yegappan/grep'
-Plugin 'rust-lang/rust.vim'
-Plugin 'vim-syntastic/syntastic'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'mileszs/ack.vim'
+call plug#begin(expand(vimDir, '/bundle'))
 
-call vundle#end()
+Plug 'scrooloose/nerdtree'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tikhomirov/vim-glsl'
+Plug 'plasticboy/vim-markdown'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'airblade/vim-gitgutter'
+Plug 'stavenko/ergodox-keymap'
+"Plug '~/.config/nvim/ergodox'
+call plug#end()
 
 filetype plugin indent on    " required
 filetype plugin on
 
 syntax on
 
+set shiftwidth=2
+set tabstop=2
+set number
+
 set expandtab
 set cindent
+set foldmethod=indent
 
+autocmd FileType typescript.tsx setl shiftwidth=2 tabstop=2
 autocmd FileType typescript setl shiftwidth=2 tabstop=2
 autocmd FileType javascript setl shiftwidth=2 tabstop=2
 autocmd FileType cpp setl shiftwidth=2 tabstop=2
+autocmd FileType c setl shiftwidth=2 tabstop=2
 autocmd FileType rust setl shiftwidth=2 tabstop=2
 
-command! -bar -buffer -nargs=* Gcm Gcommit --no-verify "<q-args>"
 
 au FileType typescript map ˆ :TSDef <CR>
+au FileType typescript.tsx map ˆ :TSDef <CR>
 au FileType rust nmap gd <Plug>(rust-def)
 au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
 au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
-" let g:tsuquyomi_disable_default_mappings=1
-" let g:tsuquyomi_disable_quickfix=1
+set colorcolumn=+1
+highlight ColorColumn
+set textwidth=80
+
+let g:grep_exclude_dirs=['node_modules', '.git']
 let g:nvim_typescript#default_mappings=0
+let g:nvim_typescript#debug_enabled=1
+let g:nvim_typescript#diagnostics_enable = 1
+let g:deoplete#enable_at_startup = 1
 let g:syntastic_check_on_open=1
-let g:syntastic_always_populate_loc_list = 0
-" let g:syntastic_javascript_checkers=['eslint']
-" let g:syntastic_typescript_checkers=['tsuquyomi']
-" let g:syntastic_javascript_eslint_exe='npx eslint'
-" let g:syntastic_rust_checkers=['cargo']
+let g:syntastic_always_populate_loc_list = 1
+let g:racer_cmd = "/Users/vstavenko/.cargo/bin/racer"
 
 map <leader>n :NERDTreeToggle<CR>
 map <leader>f :NERDTreeFind<CR>
 
 set termguicolors
-set background=dark
-colorscheme solarized8
+set background=light
+colorscheme PaperColor
+set completeopt=menu
 
-set number
+set grepprg=""
+
+function! s:get_visual_selection()
+  " Why is this not a built-in Vim script function?!
+  let [line_start, column_start] = getpos("'<")[1:2]
+  let [line_end, column_end] = getpos("'>")[1:2]
+  let lines = getline(line_start, line_end)
+  if len(lines) == 0
+    return ''
+  endif
+  let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][column_start - 1:]
+  return join(lines, "\n")
+endfunction
+
+function! GrepBufferCommandSearch() 
+  let l:pattern = shellescape(@/)
+  let l:filename = expand('%')
+  let l:command = "grep -n " . l:filename . " -e "  . l:pattern 
+  let grepOutput = systemlist(l:command) 
+  if len(grepOutput) > 0
+    call setqflist([])
+    let l:list = []
+    for line in grepOutput
+      let data = split(line, ':')
+      if  len(data) >= 2
+        let l:text = join(data[1: len(data)-1], ':')
+        call add(l:list, {'filename': l:filename, 'lnum': data[0], 'text': l:text})
+      endif
+
+    endfor
+    call setloclist(winnr(),l:list)
+    exec "rightbelow lopen"
+  endif
+endfunction
+
+function! GrepBufferCommandSelection() 
+  let l:pattern = s:get_visual_selection()
+  let l:filename = expand('%')
+  let l:command = "grep -n " . l:filename . " -e " . l:pattern 
+  let grepOutput = systemlist(l:command) 
+  if len(grepOutput) > 0
+    call setqflist([])
+    let l:list = []
+    for line in grepOutput
+      let data = split(line, ':')
+      if  len(data) >= 2
+        let l:text = join(data[1: len(data)-1], ':')
+        call add(l:list, {'filename': l:filename, 'lnum': data[0], 'text': l:text})
+      endif
+
+    endfor
+    call setloclist(winnr(),l:list)
+    exec "leftabove lopen"
+  endif
+endfunction
+
+function! GrepCommand(pattern, gparams) 
+  let l:exclude_dirs=[]
+  for item in g:grep_exclude_dirs
+    call add(l:exclude_dirs, '--exclude-dir ' . item)
+  endfor
+  let l:pattern = substitute(a:pattern, '\\>', '\\b', "g")
+  let l:pattern = substitute(l:pattern, '\\<', '\\b', "g")
+  let l:command = "rg " . a:gparams . " . -e " . shellescape(l:pattern)
+  let grepOutput = systemlist(l:command) 
+  call setqflist([])
+  if len(grepOutput) > 0
+    let l:list = []
+    for line in grepOutput
+      let data = split(line, ':')
+      if  len(data) >= 3
+        let l:text = join(data[2: len(data)-1], ':')
+        call add(l:list, {'filename': data[0], 'lnum': data[1], 'text': l:text})
+      endif
+
+    endfor
+    call setqflist(l:list)
+    exec "botright copen"
+  endif
+endfunction
+
+command! -nargs=1 VGrep :call GrepCommand(<f-args>, '-n --color never --no-heading')
+command! -nargs=1 VGrepi :call GrepCommand(<f-args>, '-rni')
+command! -range VGREPFV :call GrepBufferCommandSelection()
+
+vmap <silent> <leader>8 :VGREPFV<cr>
+nmap <silent> <leader>8 :call GrepBufferCommandSearch()<cr>
+
+vnoremap * y/<C-r>"<cr>
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+
+set keymap=russian-ergodox
+set iminsert=0
+set imsearch=0
+highlight lCursor guifg=Cyan guibg=Red
+
 
