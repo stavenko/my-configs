@@ -18,7 +18,8 @@ Plug 'plasticboy/vim-markdown'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 Plug 'airblade/vim-gitgutter'
 Plug 'stavenko/ergodox-keymap'
-"Plug '~/.config/nvim/ergodox'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 filetype plugin indent on    " required
@@ -64,6 +65,7 @@ let g:racer_cmd = "/Users/vstavenko/.cargo/bin/racer"
 
 map <leader>n :NERDTreeToggle<CR>
 map <leader>f :NERDTreeFind<CR>
+map <leader>j :FZF<CR>
 
 set termguicolors
 set background=light
@@ -130,11 +132,21 @@ endfunction
 function! GrepCommand(pattern, gparams) 
   let l:exclude_dirs=[]
   for item in g:grep_exclude_dirs
-    call add(l:exclude_dirs, '--exclude-dir ' . item)
+    call add(l:exclude_dirs, '--exclude-dir ' . item )
   endfor
   let l:pattern = substitute(a:pattern, '\\>', '\\b', "g")
   let l:pattern = substitute(l:pattern, '\\<', '\\b', "g")
-  let l:command = "rg " . a:gparams . " . -e " . shellescape(l:pattern)
+  let l:pattern = substitute(l:pattern, '\r', '\\n', "g")
+  let l:pattern = substitute(l:pattern, '\n', '\\\\n', "g")
+  let l:pattern = substitute(l:pattern, '\r\n', '\\n', "g")
+  let l:pattern = substitute(l:pattern, ']', '\\]', "g")
+  let l:pattern = substitute(l:pattern, '[', '\\[', "g")
+  let l:pattern = substitute(l:pattern, '}', '\\}', "g")
+  let l:pattern = substitute(l:pattern, '{', '\\{', "g")
+  let l:pattern = substitute(l:pattern, ')', '\\)', "g")
+  let l:pattern = substitute(l:pattern, '(', '\\(', "g")
+  let l:pattern = substitute(l:pattern, '^M', '\\n', "g")
+  let l:command = "rg " . a:gparams . " . -U -e '" . shellescape(l:pattern) . "'"
   let grepOutput = systemlist(l:command) 
   call setqflist([])
   if len(grepOutput) > 0
@@ -172,4 +184,64 @@ set iminsert=0
 set imsearch=0
 highlight lCursor guifg=Cyan guibg=Red
 
+" XML formatter
+function! DoFormatXML() range
+  " Save the file type
+  let l:origft = &ft
+
+  " Clean the file type
+  set ft=
+
+  " Add fake initial tag (so we can process multiple top-level elements)
+  exe ":let l:beforeFirstLine=" . a:firstline . "-1"
+  if l:beforeFirstLine < 0
+    let l:beforeFirstLine=0
+  endif
+  exe a:lastline . "put ='</PrettyXML>'"
+  exe l:beforeFirstLine . "put ='<PrettyXML>'"
+  exe ":let l:newLastLine=" . a:lastline . "+2"
+  if l:newLastLine > line('$')
+    let l:newLastLine=line('$')
+  endif
+
+  " Remove XML header
+  exe ":" . a:firstline . "," . a:lastline . "s/<\?xml\\_.*\?>\\_s*//e"
+
+  " Recalculate last line of the edited code
+  let l:newLastLine=search('</PrettyXML>')
+
+  " Execute external formatter
+  exe ":silent " . a:firstline . "," . l:newLastLine . "!xmllint --noblanks --format --recover -"
+
+  " Recalculate first and last lines of the edited code
+  let l:newFirstLine=search('<PrettyXML>')
+  let l:newLastLine=search('</PrettyXML>')
+
+  " Get inner range
+  let l:innerFirstLine=l:newFirstLine+1
+  let l:innerLastLine=l:newLastLine-1
+
+  " Remove extra unnecessary indentation
+  exe ":silent " . l:innerFirstLine . "," . l:innerLastLine "s/^  //e"
+
+  " Remove fake tag
+  exe l:newLastLine . "d"
+  exe l:newFirstLine . "d"
+
+  " Put the cursor at the first line of the edited code
+  exe ":" . l:newFirstLine
+
+  " Restore the file type
+  exe "set ft=" . l:origft
+endfunction
+command! -range=% FormatXML <line1>,<line2>call DoFormatXML()
+
+nmap <silent> <leader>x :%FormatXML<CR>
+vmap <silent> <leader>x :FormatXML<CR>
+
+command! -range=% PrettifyTypescript execute '!yarn prettier --write %'
+au BufWritePost *.ts execute ':PrettifyTypescript'
+
+" location list hot keys
+nmap <silent> <leader>q :lclose<CR> :lopen<CR>
 
