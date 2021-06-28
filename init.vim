@@ -1,25 +1,22 @@
-
 set nocompatible              " be iMproved, required
 filetype off                  " required
-set rtp+=~/.config/nvim/bundle/Vundle.vim
-let vimDir = '$HOME/.config/nvim'
-let &runtimepath .= ',' . expand(vimDir . '/bundle/Vundle.vim')
 
-"call vundle#rc(expand(vimDir . '/bundle'))
-
-call plug#begin(expand(vimDir, '/bundle'))
+call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'rafi/awesome-vim-colorschemes'
-Plug 'HerringtonDarkholme/yats.vim'
+"Plug 'HerringtonDarkholme/yats.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'tikhomirov/vim-glsl'
-Plug 'plasticboy/vim-markdown'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+"Plug 'tpope/vim-abolish'
+"Plug 'tikhomirov/vim-glsl'
+Plug 'gabrielelana/vim-markdown'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-gitgutter'
 Plug 'stavenko/ergodox-keymap'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 filetype plugin indent on    " required
@@ -33,7 +30,10 @@ set number
 
 set expandtab
 set cindent
-set foldmethod=indent
+set foldmethod=syntax
+set foldlevelstart=1
+set formatoptions=jctql
+
 
 autocmd FileType typescript.tsx setl shiftwidth=2 tabstop=2
 autocmd FileType typescript setl shiftwidth=2 tabstop=2
@@ -45,14 +45,15 @@ autocmd FileType rust setl shiftwidth=2 tabstop=2
 
 au FileType typescript map ˆ :TSDef <CR>
 au FileType typescript.tsx map ˆ :TSDef <CR>
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
 set colorcolumn=+1
-highlight ColorColumn
 set textwidth=80
+
+
+let g:airline#extensions#keymap#enabled = 0
+let g:airline#extensions#nerdtree_status = 1
+
+let g:markdown_enable_spell_checking = 0
 
 let g:grep_exclude_dirs=['node_modules', '.git']
 let g:nvim_typescript#default_mappings=0
@@ -65,7 +66,7 @@ let g:racer_cmd = "/Users/vstavenko/.cargo/bin/racer"
 
 map <leader>n :NERDTreeToggle<CR>
 map <leader>f :NERDTreeFind<CR>
-map <leader>j :FZF<CR>
+map <leader>j :GFiles<CR>
 
 set termguicolors
 set background=light
@@ -136,17 +137,7 @@ function! GrepCommand(pattern, gparams)
   endfor
   let l:pattern = substitute(a:pattern, '\\>', '\\b', "g")
   let l:pattern = substitute(l:pattern, '\\<', '\\b', "g")
-  let l:pattern = substitute(l:pattern, '\r', '\\n', "g")
-  let l:pattern = substitute(l:pattern, '\n', '\\\\n', "g")
-  let l:pattern = substitute(l:pattern, '\r\n', '\\n', "g")
-  let l:pattern = substitute(l:pattern, ']', '\\]', "g")
-  let l:pattern = substitute(l:pattern, '[', '\\[', "g")
-  let l:pattern = substitute(l:pattern, '}', '\\}', "g")
-  let l:pattern = substitute(l:pattern, '{', '\\{', "g")
-  let l:pattern = substitute(l:pattern, ')', '\\)', "g")
-  let l:pattern = substitute(l:pattern, '(', '\\(', "g")
-  let l:pattern = substitute(l:pattern, '^M', '\\n', "g")
-  let l:command = "rg " . a:gparams . " . -U -e '" . shellescape(l:pattern) . "'"
+  let l:command = "rg " . a:gparams . " . -e " . shellescape(l:pattern)
   let grepOutput = systemlist(l:command) 
   call setqflist([])
   if len(grepOutput) > 0
@@ -182,7 +173,6 @@ nmap <silent> gr <Plug>(coc-references)
 set keymap=russian-ergodox
 set iminsert=0
 set imsearch=0
-highlight lCursor guifg=Cyan guibg=Red
 
 " XML formatter
 function! DoFormatXML() range
@@ -239,9 +229,12 @@ command! -range=% FormatXML <line1>,<line2>call DoFormatXML()
 nmap <silent> <leader>x :%FormatXML<CR>
 vmap <silent> <leader>x :FormatXML<CR>
 
-command! -range=% PrettifyTypescript execute '!yarn prettier --write %'
-au BufWritePost *.ts execute ':PrettifyTypescript'
+"command! -range=% PrettifyTypescript execute '!yarn prettier --write %'
+nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
 
 " location list hot keys
-nmap <silent> <leader>q :lclose<CR> :lopen<CR>
+nmap <silent> <leader>q :CocList diagnostics<CR>
+nmap <silent> <leader>g :Gstatus<CR>
+nmap <silent> <leader>C :Git commit<CR>
+nmap <silent> <leader>P :Git push<CR>
 
