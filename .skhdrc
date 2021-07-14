@@ -1,0 +1,6 @@
+cmd+shift-s: /Applications/Safari.app/Contents/MacOS/Safari
+
+cmd+ctrl+shift+alt-1: yabai -m space --focus one
+cmd+ctrl+shift+alt-2: yabai -m space --focus two
+ctrl+shift+alt-6: yabai -m space --focus retina-one
+ctrl+shift+alt-7: yabai -m space --focus retina-two

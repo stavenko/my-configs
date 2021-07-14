@@ -1,0 +1,8 @@
+
+enumerate-spaces
+
+yabai -m config layout bsp
+
+yabai -m signal --add event=system_woke  action="enumerate-spaces"
+
+
