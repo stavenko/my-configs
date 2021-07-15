@@ -4,11 +4,29 @@ mod window;
 
 pub use space::Space;
 pub use window::Window;
+use std::collections::HashMap;
 use std::process::Stdio;
+use std::time::Duration;
 use tokio::io::{AsyncBufReadExt, BufReader};
+use tokio::time::sleep;
 use tokio::process::Command;
 
 
+fn parse_label(item: &str)->i32 {
+  match item {
+    "one" => 1,
+    "two" => 2,
+    "three" => 3,
+    "four" => 4,
+    "five" => 5,
+    "six" => 6,
+    "seven" => 7,
+    "eight" => 8,
+    "nine" => 9,
+    "ten" => 10,
+    _ => -1,
+  }
+}
 fn get_space_name(id: i32)->String {
   match id {
     1 => "one".into(),
@@ -25,13 +43,35 @@ fn get_space_name(id: i32)->String {
   }
 }
 
+
+fn find_smallest_gap(labels: &[i32]) -> i32 {
+  let mut set = Vec::new();
+  for i in 1..11 {
+    if !labels.contains(&i) {
+      set.push(i);
+    }
+  }
+  set.sort_unstable();
+  println!("exist labels {:?}, created set {:?}", labels, set );
+  set[0]
+}
+
+
+
 pub async fn enumerate_spaces() {
   let spaces = collect_spaces().await;
+  let mut labels = spaces.iter()
+    .map(|s| parse_label(&s.label))
+    .filter(|id| *id > 0)
+    .collect::<Vec<_>>();
 
-  for (id, space) in spaces.iter().filter(|space| !space.native_fullscreen).enumerate() {
+
+  for space in spaces.iter().filter(|space| !space.native_fullscreen) {
 
     if space.label.is_empty() {
-      let name = get_space_name((id+1) as i32);
+      let gap = find_smallest_gap(&labels);
+      let name = get_space_name((gap) as i32);
+      labels.push(gap);
       let mut cmd = Command::new("yabai");
 
       cmd
@@ -78,15 +118,30 @@ pub async fn collect_spaces() -> Vec<Space> {
   serde_json::from_str(&result).expect("Cannot parse result")
 }
 
-
-pub async fn focus_space(label: &str) {
+async fn collect_spaces_on_display(display_id: i16) -> Vec<Space> {
   let mut cmd = Command::new("yabai");
 
   cmd
     .arg("-m")
+    .arg("query")
+    .arg("--spaces")
+    .arg("--display")
+    .arg(format!("{}", display_id ))
+    .stdout(Stdio::piped());
+
+  let result = run_command(cmd).await;
+
+  serde_json::from_str(&result).expect("Cannot parse result")
+}
+
+
+pub async fn focus_space(label: &str) {
+  let mut cmd = Command::new("yabai");
+  cmd
+    .arg("-m")
     .arg("space")
-    .arg(label)
     .arg("--focus")
+    .arg(label)
     .stdout(Stdio::piped());
   run_command(cmd).await;
 }
@@ -125,12 +180,21 @@ pub async fn create_space(spaces: &[Space], space_label: &str) {
     .arg("--create")
     .stdout(Stdio::piped());
 
+
+  for space in spaces{
+    println!("Before {:?}", space); 
+  }
+
   run_command(cmd).await;
   let new_spaces = collect_spaces().await;
+  for space in new_spaces.iter(){
+    println!("After {:?}", space); 
+  }
   if let Some(new_space) = new_spaces
     .iter()
-    .find(|s| spaces.iter().position(|ss| ss.index == s.index).is_none())
+    .find(|s| s.label.is_empty())
   {
+    println!("put label {} on space {}", space_label, new_space.index);
     let mut cmd = Command::new("yabai");
     cmd
       .arg("-m")
@@ -143,14 +207,47 @@ pub async fn create_space(spaces: &[Space], space_label: &str) {
   }
 }
 
+
+fn spaces_per_display(spaces: &[Space])->HashMap<i16, i32> {
+  let mut result = HashMap::new();
+  for space in spaces {
+    #[allow(clippy::map_entry)] 
+    if result.contains_key(&space.display) {
+      if let Some(x) = result.get_mut(&space.display){
+        *x += 1;
+      }
+    } else {
+      result.insert(space.display, 1);
+    }
+
+  }
+  result
+}
+
+pub async fn wait_until_focused(label: &str) {
+  loop {
+    if let Some(space) = collect_spaces().await.into_iter().find(|space| space.label == label) {
+      if space.visible {
+        break;
+      }
+    } else {
+      panic!("no such space with label {}", label);
+    }
+    sleep(Duration::from_millis(100)).await
+  }
+}
+
+
 fn is_empty_space(space: &Space, ignored_window_ids: &[i32]) -> bool {
   let windows_left = space.windows.iter()
     .filter(|id| !ignored_window_ids.contains(id))
     .count();
 
-  println!("windows_left {:?}, original {:?}", windows_left, space.windows); 
+  if space.index ==3 {
+    println!("space to check {:?}", space);
+  }
 
-  !space.focused && windows_left == 0
+  !space.visible && windows_left == 0
 }
 
 pub async fn cleanup_spaces(ignore_apps_titles: &[String]) {
@@ -160,8 +257,10 @@ pub async fn cleanup_spaces(ignore_apps_titles: &[String]) {
     .collect::<Vec<_>>();
 
 
-  let spaces: Vec<Space> = collect_spaces()
-    .await
+  let all_spaces = collect_spaces()
+    .await;
+  let spaces_per_display = spaces_per_display(&all_spaces);
+  let spaces: Vec<Space> = all_spaces
     .into_iter()
     .filter(|s| {
       is_empty_space(s, &windows_to_ignore)
@@ -178,18 +277,21 @@ pub async fn cleanup_spaces(ignore_apps_titles: &[String]) {
         .join(" ")
     );
   }
+  println!("spaces per display {:?}", spaces_per_display);
 
   for space in spaces.into_iter() {
-    let mut cmd = Command::new("yabai");
-    cmd
-      .arg("-m")
-      .arg("space")
-      .arg(format!("{}", space.index))
-      .arg("--destroy")
-      .stdout(Stdio::piped())
-      ;
-    
-    run_command(cmd).await;
+    if spaces_per_display[&space.display] > 1 {
+      let mut cmd = Command::new("yabai");
+      cmd
+        .arg("-m")
+        .arg("space")
+        .arg(format!("{}", space.index))
+        .arg("--destroy")
+        .stdout(Stdio::piped())
+        ;
+      
+      run_command(cmd).await;
+    }
   }
 }
 #[cfg(test)]

@@ -1,8 +1,7 @@
-use serde::de::{self, Deserializer, Unexpected};
 use serde::{Deserialize, Serialize};
 use super::bool_from_int::bool_from_int;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "kebab-case")]
 pub struct Space {
   pub id: i16,

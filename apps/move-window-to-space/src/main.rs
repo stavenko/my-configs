@@ -1,4 +1,4 @@
-use common::{cleanup_spaces, collect_spaces, create_space, move_focused_window_to_space};
+use common::{wait_until_focused,cleanup_spaces, collect_spaces, create_space, move_focused_window_to_space};
 
 use clap::{AppSettings, Clap};
 
@@ -23,8 +23,9 @@ async fn main() {
   } else {
     create_space(&spaces, &opts.desired_space).await;
     move_focused_window_to_space(&opts.desired_space).await;
-    println!("need to create space");
   }
+
+  wait_until_focused(&opts.desired_space).await;
 
   cleanup_spaces(&opts.ignore_apps).await;
 }

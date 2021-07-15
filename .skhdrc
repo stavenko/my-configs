@@ -1,6 +1,22 @@
-cmd+shift-s: /Applications/Safari.app/Contents/MacOS/Safari
 
-cmd+ctrl+shift+alt-1: yabai -m space --focus one
-cmd+ctrl+shift+alt-2: yabai -m space --focus two
-ctrl+shift+alt-6: yabai -m space --focus retina-one
-ctrl+shift+alt-7: yabai -m space --focus retina-two
+cmd+ctrl+shift+alt-1: focus-space one --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-2: focus-space two --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-3: focus-space three --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-4: focus-space four --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-5: focus-space five --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-6: focus-space six --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-7: focus-space seven --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-8: focus-space eight --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-9: focus-space nine --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-0: focus-space ten --ignore-apps="Microsoft Teams Notification"
+
+cmd+ctrl+shift+alt-q: move-window-to-space one --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-w: move-window-to-space two --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-e: move-window-to-space three --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-r: move-window-to-space four --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-t: move-window-to-space five --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-y: move-window-to-space six --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-u: move-window-to-space seven --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-i: move-window-to-space eight --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-o: move-window-to-space nine --ignore-apps="Microsoft Teams Notification"
+cmd+ctrl+shift+alt-p: move-window-to-space ten --ignore-apps="Microsoft Teams Notification"

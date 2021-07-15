@@ -1,8 +1,7 @@
 
+yabai -m config layout bsp
+yabai -m signal --add event=system_woke  action="enumerate-spaces"
 enumerate-spaces
 
-yabai -m config layout bsp
-
-yabai -m signal --add event=system_woke  action="enumerate-spaces"
-
-
+yabai -m config auto_balance on
+yabai -m config external_bar all:0:30

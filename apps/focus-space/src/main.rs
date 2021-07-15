@@ -1,5 +1,5 @@
 use clap::{AppSettings, Clap};
-use common::{ collect_spaces, create_space, focus_space, cleanup_spaces };
+use common::{ wait_until_focused, collect_spaces, create_space, focus_space, cleanup_spaces };
 
 #[derive(Clap, Debug)]
 #[clap(version = "1.0", author = "Vasiliy G. <kbknapp@gmail.com>")]
@@ -24,6 +24,8 @@ async fn main() {
     create_space(&spaces, &opts.desired_space).await;
     focus_space(&opts.desired_space).await;
   }
+
+  wait_until_focused(&opts.desired_space).await;
 
   cleanup_spaces(&opts.ignore_apps).await;
 
