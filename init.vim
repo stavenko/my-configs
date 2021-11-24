@@ -10,10 +10,12 @@ Plug 'tpope/vim-fugitive'
 "Plug 'tpope/vim-abolish'
 "Plug 'tikhomirov/vim-glsl'
 Plug 'gabrielelana/vim-markdown'
+Plug 'rust-lang/rust.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-gitgutter'
 Plug 'stavenko/ergodox-keymap'
 Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -230,7 +232,10 @@ nmap <silent> <leader>x :%FormatXML<CR>
 vmap <silent> <leader>x :FormatXML<CR>
 
 "command! -range=% PrettifyTypescript execute '!yarn prettier --write %'
-nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
+autocmd FileType typescript nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
+autocmd FileType typescript.tsx nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
+autocmd FileType rust nmap <silent><leader>a :RustFmt<CR>
+autocmd FileType rust nmap <silent><leader>s :CocFix <CR>
 
 " location list hot keys
 nmap <silent> <leader>q :CocList diagnostics<CR>
