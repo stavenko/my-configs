@@ -30,25 +30,33 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
    dpkg-reconfigure --frontend=noninteractive locales
 
 
-run apt-get update && apt-get install -y software-properties-common curl git
+run apt-get update && \
+    apt-get install -y software-properties-common curl git openssh-server sudo
 run curl https://deb.nodesource.com/setup_16.x -o sources.sh && \
     bash ./sources.sh && \
-    apt-get install -y nodejs gcc unzip zip g++ make cmake;
+    apt-get install -y nodejs;
 
 run add-apt-repository ppa:neovim-ppa/unstable && \ 
     apt-get update && \
     apt-get install -y neovim;
 
 
-ENV XDG_CONFIG_HOME=/root/.config
-ENV XDG_DATA_HOME=/root/.local/share
-ENV HOME=/root
+run useradd -rm -d /home/nvim -s /bin/bash -g root -G sudo -u 1000 nvim 
+run  echo 'nvim:nvim' | chpasswd
+RUN service ssh start
+user nvim
+
+
+ENV XDG_CONFIG_HOME=/home/nvim/.config
+ENV XDG_DATA_HOME=/home/nvim/.local/share
+ENV HOME=/home/nvim
+run mkdir $XDG_CONFIG_HOME
 run curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-copy ./init.vim /root/.config/nvim/init.vim
+run chown -R nvim $XDG_CONFIG_HOME
+copy ./init.vim $XDG_CONFIG_HOME/nvim/init.vim
 
-run nvim +PlugInstall +qall
-run nvim +CocInstall coc-clangd +qall
+run nvim +PlugInstall +CocInstall +qall
 
 
 
