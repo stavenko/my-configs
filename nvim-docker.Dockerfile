@@ -1,21 +1,20 @@
 from ubuntu as builder
 
 RUN apt-get update && \
-    apt-get install -y wget curl unzip jq
+    apt-get install -y wget curl xz-utils jq
+run curl -s https://api.github.com/repos/llvm/llvm-project/releases/latest | jq -r ".assets[] | select(.name|test(\"llvm.*`uname -m`.*tar.xz$\")) | .browser_download_url" | wget -q -O llvm.tar.xz -i -
 
-run curl -s https://api.github.com/repos/clangd/clangd/releases/latest | jq -r '.assets[] | select(.name|test("clangd-linux")) | .name' > /zip-file-name
-run curl -s https://api.github.com/repos/clangd/clangd/releases/latest | jq -r '.assets[] | select(.name|test("clangd-linux")) | .browser_download_url' | wget -qi - 
-run unzip `cat /zip-file-name` -d /clangd && \
-    cd /clangd && \
+run mkdir -p /llvm-bins && \
+    tar -xf llvm.tar.xz --directory /llvm-bins && \
+    cd /llvm-bins && \
     cd `ls` && \
-    mkdir /clangd-bins && \
-    mv ./* /clangd-bins
-    
+    mkdir /llvm && \
+    mv ./* /llvm
 
 from ubuntu
 
-copy --from=builder /clangd-bins/bin/* /bin/
-copy --from=builder /clangd-bins/lib/* /lib/
+copy --from=builder /llvm/bin/* /bin/
+copy --from=builder /llvm/lib/* /lib/
 
 RUN apt-get update && \
     apt-get install -y \
@@ -31,7 +30,7 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
 
 
 run apt-get update && \
-    apt-get install -y software-properties-common curl git openssh-server sudo
+    apt-get install -y software-properties-common curl git openssh-server sudo libncurses5 ripgrep
 run curl https://deb.nodesource.com/setup_16.x -o sources.sh && \
     bash ./sources.sh && \
     apt-get install -y nodejs;
@@ -56,7 +55,12 @@ run curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim
 run chown -R nvim $XDG_CONFIG_HOME
 copy ./init.vim $XDG_CONFIG_HOME/nvim/init.vim
 
-run nvim +PlugInstall +CocInstall +qall
+run nvim +PlugInstall +qall 
+run nvim "+CocInstall -sync coc-clangd" +qall
+
+user root
+entrypoint ["/usr/sbin/sshd", "-D", "-p22"]
+
 
 
 

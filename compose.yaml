@@ -1,0 +1,11 @@
+version: '3.7'
+services: 
+  nvim: 
+    build: 
+      context: .
+      dockerfile: nvim-docker.Dockerfile
+    ports:
+      - "232:22"
+    volumes:
+      - $PROJECTS:/projecs
+
