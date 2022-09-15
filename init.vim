@@ -5,10 +5,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'rafi/awesome-vim-colorschemes'
-"Plug 'HerringtonDarkholme/yats.vim'
 Plug 'tpope/vim-fugitive'
-"Plug 'tpope/vim-abolish'
-"Plug 'tikhomirov/vim-glsl'
 Plug 'gabrielelana/vim-markdown'
 Plug 'rust-lang/rust.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -19,6 +16,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'tomlion/vim-solidity'
 call plug#end()
 
 filetype plugin indent on    " required
@@ -65,6 +64,7 @@ let g:deoplete#enable_at_startup = 1
 let g:syntastic_check_on_open=1
 let g:syntastic_always_populate_loc_list = 1
 let g:racer_cmd = "/Users/vstavenko/.cargo/bin/racer"
+let g:rustfmt_command = "rustup run stable rustfmt"
 
 map <leader>n :NERDTreeToggle<CR>
 map <leader>f :NERDTreeFind<CR>
@@ -236,10 +236,13 @@ autocmd FileType typescript nmap <silent><leader>a :CocCommand prettier.formatFi
 autocmd FileType typescript.tsx nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
 autocmd FileType rust nmap <silent><leader>a :RustFmt<CR>
 autocmd FileType rust nmap <silent><leader>s :CocFix <CR>
+autocmd FileType rust nmap <silent><leader>J :CocCommand rust-analyzer.moveItemDown<CR>
+autocmd FileType rust nmap <silent><leader>K :CocCommand rust-analyzer.moveItemUp<CR>
+autocmd FileType rust nmap <silent><leader>M :CocCommand rust-analyzer.expandMacro<CR>
 
 " location list hot keys
 nmap <silent> <leader>q :CocList diagnostics<CR>
 nmap <silent> <leader>g :Gstatus<CR>
 nmap <silent> <leader>C :Git commit<CR>
 nmap <silent> <leader>P :Git push<CR>
-
+command AddSpelling :CocCommand cSpell.AddWordToUserDictionary<CR>
