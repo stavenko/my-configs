@@ -1,5 +1,5 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+"set nocompatible              " be iMproved, required
+"filetype off                  " required
 
 call plug#begin('~/.vim/plugged')
 
@@ -14,14 +14,14 @@ Plug 'stavenko/ergodox-keymap'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'tomlion/vim-solidity'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+"Plug 'dart-lang/dart-vim-plugin'
+"Plug 'tomlion/vim-solidity'
 call plug#end()
 
-filetype plugin indent on    " required
-filetype plugin on
+"filetype plugin indent on    " required
+"filetype plugin on
 
 syntax on
 
@@ -35,13 +35,16 @@ set foldmethod=syntax
 set foldlevelstart=1
 set formatoptions=jctql
 
+" This little command enables <enter> key to complete word using autocomplete
+" menu
+inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>" 
 
 autocmd FileType typescript.tsx setl shiftwidth=2 tabstop=2
 autocmd FileType typescript setl shiftwidth=2 tabstop=2
 autocmd FileType javascript setl shiftwidth=2 tabstop=2
 autocmd FileType cpp setl shiftwidth=2 tabstop=2
 autocmd FileType c setl shiftwidth=2 tabstop=2
-autocmd FileType rust setl shiftwidth=2 tabstop=2
+autocmd FileType rust setl shiftwidth=4 tabstop=4
 
 
 au FileType typescript map ˆ :TSDef <CR>
@@ -64,17 +67,18 @@ let g:deoplete#enable_at_startup = 1
 let g:syntastic_check_on_open=1
 let g:syntastic_always_populate_loc_list = 1
 let g:racer_cmd = "/Users/vstavenko/.cargo/bin/racer"
-let g:rustfmt_command = "rustup run stable rustfmt"
-
+let g:rustfmt_command = "rustup run nightly-2022-07-25 rustfmt"
+let g:rustfmt_options = "--edition=2021"
+ 
+ 
 map <leader>n :NERDTreeToggle<CR>
-map <leader>f :NERDTreeFind<CR>
-map <leader>j :GFiles<CR>
-
+nmap <leader>f :NERDTreeFind<CR>
+nmap <leader>j :GFiles<CR>
+" 
 set termguicolors
 set background=light
 colorscheme PaperColor
-set completeopt=menu
-
+ 
 set grepprg=""
 
 function! s:get_visual_selection()
@@ -163,15 +167,15 @@ command! -range VGREPFV :call GrepBufferCommandSelection()
 
 vmap <silent> <leader>8 :VGREPFV<cr>
 nmap <silent> <leader>8 :call GrepBufferCommandSearch()<cr>
-
+ 
 vnoremap * y/<C-r>"<cr>
-
+ 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
-
+" 
+" 
 set keymap=russian-ergodox
 set iminsert=0
 set imsearch=0
@@ -235,14 +239,12 @@ vmap <silent> <leader>x :FormatXML<CR>
 autocmd FileType typescript nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
 autocmd FileType typescript.tsx nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
 autocmd FileType rust nmap <silent><leader>a :RustFmt<CR>
-autocmd FileType rust nmap <silent><leader>s :CocFix <CR>
-autocmd FileType rust nmap <silent><leader>J :CocCommand rust-analyzer.moveItemDown<CR>
-autocmd FileType rust nmap <silent><leader>K :CocCommand rust-analyzer.moveItemUp<CR>
-autocmd FileType rust nmap <silent><leader>M :CocCommand rust-analyzer.expandMacro<CR>
+" autocmd FileType rust nmap <silent><leader>J :CocCommand rust-analyzer.moveItemDown<CR>
+" autocmd FileType rust nmap <silent><leader>K :CocCommand rust-analyzer.moveItemUp<CR>
+" autocmd FileType rust nmap <silent><leader>M :CocCommand rust-analyzer.expandMacro<CR>
 
 " location list hot keys
 nmap <silent> <leader>q :CocList diagnostics<CR>
-nmap <silent> <leader>g :Gstatus<CR>
-nmap <silent> <leader>C :Git commit<CR>
-nmap <silent> <leader>P :Git push<CR>
-command AddSpelling :CocCommand cSpell.AddWordToUserDictionary<CR>
+
+vmap <leader>z <Plug>(coc-codeaction-selected)
+nmap <leader>z <Plug>(coc-codeaction-selected) 
