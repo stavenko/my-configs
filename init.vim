@@ -3,7 +3,9 @@
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'scrooloose/nerdtree'
+Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
+Plug 'nvim-tree/nvim-tree.lua'
+
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'tpope/vim-fugitive'
 Plug 'gabrielelana/vim-markdown'
@@ -14,14 +16,12 @@ Plug 'stavenko/ergodox-keymap'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
-"Plug 'dart-lang/dart-vim-plugin'
-"Plug 'tomlion/vim-solidity'
 call plug#end()
 
 "filetype plugin indent on    " required
 "filetype plugin on
+
+lua require("nvim-tree").setup();
 
 syntax on
 
@@ -66,13 +66,12 @@ let g:nvim_typescript#diagnostics_enable = 1
 let g:deoplete#enable_at_startup = 1
 let g:syntastic_check_on_open=1
 let g:syntastic_always_populate_loc_list = 1
-let g:racer_cmd = "/Users/vstavenko/.cargo/bin/racer"
 let g:rustfmt_command = "rustup run nightly-2022-07-25 rustfmt"
 let g:rustfmt_options = "--edition=2021"
  
  
-map <leader>n :NERDTreeToggle<CR>
-nmap <leader>f :NERDTreeFind<CR>
+map <leader>n :NvimTreeToggle<CR>
+nmap <leader>f :NvimTreeFindFile<CR>
 nmap <leader>j :GFiles<CR>
 " 
 set termguicolors
@@ -239,9 +238,6 @@ vmap <silent> <leader>x :FormatXML<CR>
 autocmd FileType typescript nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
 autocmd FileType typescript.tsx nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
 autocmd FileType rust nmap <silent><leader>a :RustFmt<CR>
-" autocmd FileType rust nmap <silent><leader>J :CocCommand rust-analyzer.moveItemDown<CR>
-" autocmd FileType rust nmap <silent><leader>K :CocCommand rust-analyzer.moveItemUp<CR>
-" autocmd FileType rust nmap <silent><leader>M :CocCommand rust-analyzer.expandMacro<CR>
 
 " location list hot keys
 nmap <silent> <leader>q :CocList diagnostics<CR>
