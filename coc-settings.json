@@ -1,13 +1,15 @@
 {
   "coc.preferences.enableMessageDialog": true,
-  "rust-analyzer.lens.enable": true,
+  // "rust-analyzer.lens.enable": true,
   "rust-analyzer.updates.checkOnStartup": true,
+  "rust-analyzer.updates.channel": "nightly",
   "rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.rustfmt.overrideCommand": ["rustup run nightly-2022-07-25 rustfmt"],
   "cSpell.userWords": [
     "Backoff",
     "Borsh",
     "Deque",
+    "Fetchable",
     "Hasher",
     "NANOSECS",
     "Protobuf",
@@ -29,11 +31,13 @@
     "orderbook",
     "perp",
     "pseudoheaders",
+    "rustfmt",
     "sqlx",
     "sslmode",
     "struct",
     "subcomponent",
     "thiserror",
+    "tungstenite",
     "typemap"
   ]
 }

@@ -22,6 +22,7 @@ call plug#end()
 "filetype plugin on
 
 lua require("nvim-tree").setup();
+lua vim.lsp.set_log_level('debug');
 
 syntax on
 
@@ -34,6 +35,7 @@ set cindent
 set foldmethod=syntax
 set foldlevelstart=1
 set formatoptions=jctql
+
 
 " This little command enables <enter> key to complete word using autocomplete
 " menu
