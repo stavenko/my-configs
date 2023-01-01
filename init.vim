@@ -21,11 +21,24 @@ call plug#end()
 "filetype plugin indent on    " required
 "filetype plugin on
 
-lua require("nvim-tree").setup();
-lua vim.lsp.set_log_level('debug');
+lua << EOF
+  local nvim_tree = require "nvim-tree"
+  nvim_tree.setup {
+    sync_root_with_cwd = true,
+    view = {
+      adaptive_size = true,
+      mappings = {
+        list = {
+          {key ="cd", action="cd"}
+        }
+      }
+    }
+  }
+  vim.lsp.set_log_level 'debug'
+EOF
+
 
 syntax on
-
 set shiftwidth=2
 set tabstop=2
 set number
