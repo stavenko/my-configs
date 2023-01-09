@@ -81,9 +81,6 @@ let g:nvim_typescript#diagnostics_enable = 1
 let g:deoplete#enable_at_startup = 1
 let g:syntastic_check_on_open=1
 let g:syntastic_always_populate_loc_list = 1
-let g:rustfmt_command = "rustup run nightly rustfmt"
-"let g:rustfmt_options = "--edition=2021"
- 
  
 map <leader>n :NvimTreeToggle<CR>
 nmap <leader>f :NvimTreeFindFile<CR>
@@ -253,6 +250,7 @@ vmap <silent> <leader>x :FormatXML<CR>
 autocmd FileType typescript nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
 autocmd FileType typescript.tsx nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
 autocmd FileType rust nmap <silent><leader>a :RustFmt<CR>
+autocmd BufNewFile,BufRead *.scenario   set syntax=yaml
 
 " location list hot keys
 nmap <silent> <leader>q :CocList diagnostics<CR>

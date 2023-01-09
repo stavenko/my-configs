@@ -5,6 +5,11 @@
   "rust-analyzer.updates.channel": "nightly",
   "rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.rustfmt.overrideCommand": ["rustup run nightly-2022-07-25 rustfmt"],
+  "sql.database": "postgresql",
+  "sql.formatOptions": {
+    "keywordCase": "lower",
+    "dialect": "postgresql"
+  },
   "cSpell.userWords": [
     "Backoff",
     "Borsh",
