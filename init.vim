@@ -5,7 +5,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
 Plug 'nvim-tree/nvim-tree.lua'
-
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'tpope/vim-fugitive'
 Plug 'gabrielelana/vim-markdown'
@@ -16,6 +15,7 @@ Plug 'stavenko/ergodox-keymap'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'honza/vim-snippets'
 call plug#end()
 
 "filetype plugin indent on    " required
@@ -45,8 +45,8 @@ set number
 
 set expandtab
 set cindent
-set foldmethod=syntax
-set foldlevelstart=1
+"set foldmethod=syntax
+"set foldlevelstart=1
 set formatoptions=jctql
 
 
@@ -54,12 +54,15 @@ set formatoptions=jctql
 " menu
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>" 
 
+:tnoremap <Esc> <C-\><C-n>
+
 autocmd FileType typescript.tsx setl shiftwidth=2 tabstop=2
 autocmd FileType typescript setl shiftwidth=2 tabstop=2
 autocmd FileType javascript setl shiftwidth=2 tabstop=2
 autocmd FileType cpp setl shiftwidth=2 tabstop=2
 autocmd FileType c setl shiftwidth=2 tabstop=2
 autocmd FileType rust setl shiftwidth=4 tabstop=4
+autocmd FileType markdown setl fo=twan1
 
 
 au FileType typescript map ˆ :TSDef <CR>
@@ -81,10 +84,33 @@ let g:nvim_typescript#diagnostics_enable = 1
 let g:deoplete#enable_at_startup = 1
 let g:syntastic_check_on_open=1
 let g:syntastic_always_populate_loc_list = 1
+let g:coc_global_extensions=[
+ \'coc-lists', 
+ \'coc-rust-analyzer', 
+ \'coc-json', 
+ \'coc-sql',
+ \'coc-yaml',
+ \'coc-emoji',
+ \'coc-marketplace',
+ \'coc-spell-checker',
+ \'coc-snippets'
+ \]
  
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+
 map <leader>n :NvimTreeToggle<CR>
 nmap <leader>f :NvimTreeFindFile<CR>
-nmap <leader>j :GFiles<CR>
+nmap <leader>j :CocList files<CR>
 " 
 set termguicolors
 set background=light
@@ -95,8 +121,7 @@ set grepprg=""
 function! s:get_visual_selection()
   " Why is this not a built-in Vim script function?!
   let [line_start, column_start] = getpos("'<")[1:2]
-  let [line_end, column_end] = getpos("'>")[1:2]
-  let lines = getline(line_start, line_end)
+  let [line_end, column_end] = getpos("'>")[1:2] let lines = getline(line_start, line_end)
   if len(lines) == 0
     return ''
   endif
@@ -249,7 +274,7 @@ vmap <silent> <leader>x :FormatXML<CR>
 "command! -range=% PrettifyTypescript execute '!yarn prettier --write %'
 autocmd FileType typescript nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
 autocmd FileType typescript.tsx nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
-autocmd FileType rust nmap <silent><leader>a :RustFmt<CR>
+autocmd FileType rust nmap <silent><leader>a :call CocAction('format')<CR>
 autocmd BufNewFile,BufRead *.scenario   set syntax=yaml
 
 " location list hot keys

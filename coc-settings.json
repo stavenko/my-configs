@@ -1,14 +1,15 @@
 {
   "coc.preferences.enableMessageDialog": true,
-  // "rust-analyzer.lens.enable": true,
+  "coc.preferences.formatOnSave": true,
+  "coc.preferences.formatOnType": true,
   "rust-analyzer.updates.checkOnStartup": true,
   "rust-analyzer.updates.channel": "nightly",
   "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.rustfmt.overrideCommand": ["rustup run nightly-2022-07-25 rustfmt"],
   "sql.database": "postgresql",
   "sql.formatOptions": {
     "keywordCase": "lower",
-    "dialect": "postgresql"
+    "dialect": "postgresql",
+    "denseOperators": true
   },
   "cSpell.userWords": [
     "Backoff",
@@ -44,5 +45,6 @@
     "thiserror",
     "tungstenite",
     "typemap"
-  ]
+  ],
+  "snippets.ultisnips.pythonPrompt": false
 }
