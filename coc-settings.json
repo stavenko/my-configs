@@ -4,7 +4,6 @@
   "coc.preferences.formatOnType": true,
   "rust-analyzer.updates.checkOnStartup": true,
   "rust-analyzer.updates.channel": "nightly",
-  "rust-analyzer.checkOnSave.command": "clippy",
   "sql.database": "postgresql",
   "sql.formatOptions": {
     "keywordCase": "lower",
