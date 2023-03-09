@@ -268,8 +268,8 @@ function! DoFormatXML() range
 endfunction
 command! -range=% FormatXML <line1>,<line2>call DoFormatXML()
 
-nmap <silent> <leader>x :%FormatXML<CR>
-vmap <silent> <leader>x :FormatXML<CR>
+"nmap <silent> <leader>x :%FormatXML<CR>
+"vmap <silent> <leader>x :FormatXML<CR>
 
 "command! -range=% PrettifyTypescript execute '!yarn prettier --write %'
 autocmd FileType typescript nmap <silent><leader>a :CocCommand prettier.formatFile<CR>
