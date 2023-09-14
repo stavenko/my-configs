@@ -7,7 +7,8 @@ Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'tpope/vim-fugitive'
-Plug 'gabrielelana/vim-markdown'
+Plug 'godlygeek/tabular'
+Plug 'preservim/vim-markdown'
 Plug 'rust-lang/rust.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-gitgutter'
@@ -18,15 +19,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'honza/vim-snippets'
 call plug#end()
 
-"filetype plugin indent on    " required
-"filetype plugin on
+autocmd filetype markdown syn region math start=/\$\$/ end=/\$\$/
+autocmd filetype markdown syn match math '\$[^$].\{-}\$'
 
 lua << EOF
   local nvim_tree = require "nvim-tree"
   nvim_tree.setup {
     sync_root_with_cwd = true,
     view = {
-      adaptive_size = true,
       mappings = {
         list = {
           {key ="cd", action="cd"}
@@ -76,6 +76,7 @@ let g:airline#extensions#keymap#enabled = 0
 let g:airline#extensions#nerdtree_status = 1
 
 let g:markdown_enable_spell_checking = 0
+let g:vim_markdown_folding_disabled = 1
 
 let g:grep_exclude_dirs=['node_modules', '.git']
 let g:nvim_typescript#default_mappings=0
@@ -93,6 +94,7 @@ let g:coc_global_extensions=[
  \'coc-emoji',
  \'coc-marketplace',
  \'coc-spell-checker',
+ \'coc-cspell-dicts',
  \'coc-snippets'
  \]
  
@@ -114,7 +116,7 @@ nmap <leader>j :CocList files<CR>
 " 
 set termguicolors
 set background=light
-colorscheme PaperColor
+colorscheme flattened_dark
  
 set grepprg=""
 
@@ -279,6 +281,7 @@ autocmd BufNewFile,BufRead *.scenario   set syntax=yaml
 
 " location list hot keys
 nmap <silent> <leader>q :CocList diagnostics<CR>
+nmap <silent> <leader>m :CocCommand rust-analyzer.parentModule<CR>
 
 vmap <leader>z <Plug>(coc-codeaction-selected)
 nmap <leader>z <Plug>(coc-codeaction-selected) 
