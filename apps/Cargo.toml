@@ -1,9 +1,0 @@
-[workspace]
-
-members=[
-  "move-window-to-space",
-  "common",
-  "cleanup-spaces",
-  "focus-space",
-  "enumerate-spaces"
-]
