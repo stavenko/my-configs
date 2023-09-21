@@ -88,6 +88,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:coc_global_extensions=[
  \'coc-lists', 
  \'coc-rust-analyzer', 
+ \'coc-clangd', 
  \'coc-json', 
  \'coc-sql',
  \'coc-yaml',
