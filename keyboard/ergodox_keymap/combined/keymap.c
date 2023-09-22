@@ -75,7 +75,6 @@ enum keycodes {
 
     SW_WIN,  // Switch to next window         (alt-tab)
     SW_TAB,  // Switch to next browser tab    (ctrl-tab)
-             //
     RGB_SLD,
     SWITCH_RUSSIAN,
     SWITCH_ENGLISH,
