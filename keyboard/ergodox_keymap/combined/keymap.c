@@ -54,6 +54,16 @@ enum layers {
     _NAV,
     _NUM,
     _ALT,
+
+    BASE,
+    RUSSIAN,
+    SYMB,
+    NAVI
+
+};
+
+enum tap_dances{
+  QUOTES_DBLQUOTES,
 };
 
 enum keycodes {
@@ -65,6 +75,10 @@ enum keycodes {
 
     SW_WIN,  // Switch to next window         (alt-tab)
     SW_TAB,  // Switch to next browser tab    (ctrl-tab)
+             //
+    RGB_SLD,
+    SWITCH_RUSSIAN,
+    SWITCH_ENGLISH,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -74,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_A,     KC_S,     KC_D,   KC_F,    KC_G,
         KC_NO,   KC_Z,     KC_X,     KC_C,   KC_V,    KC_B,     KC_NO, 
         KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_ESC,
-                                                      KC_NO,    KC_NO,  
+                                                      KC_NO,    DF(BASE),  
                                                                 KC_NO, 
                                              LA_NAV,  KC_SPC,  KC_ESC,
 
@@ -171,7 +185,88 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_NO,
         KC_NO,
         KC_NO,   KC_NO,  KC_NO
-  )
+  ),
+
+
+[BASE] = LAYOUT_ergodox(  // Old layout
+        // left hand
+        KC_EQL,         KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   SWITCH_RUSSIAN,
+        KC_NO,        KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   KC_TILD,
+        MO(NAVI),        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
+        KC_LSFT,        CTL_T(KC_Z),  KC_X,   KC_C,   KC_V,   KC_B,   KC_HYPR,
+        KC_LGUI,KC_LALT,      KC_NO,  KC_MEH, KC_ESC,
+                                              DF(_DEF),  KC_LGUI,
+                                                              KC_HOME,
+                                               KC_SPC,KC_BSPC,MO(SYMB),
+        // right hand
+             SWITCH_ENGLISH,     KC_6,   KC_7,  KC_8,   KC_9,   KC_0,             KC_MINS,
+             KC_RBRC,      KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,             KC_BSLS,
+                            KC_H,   KC_J,  KC_K,   KC_L,   KC_SCLN, KC_QUOT ,
+             KC_HYPR,  KC_N,  KC_M,  KC_COMM,KC_DOT, CTL_T(KC_SLSH),   KC_RSFT,
+                                  KC_ESC, KC_MEH,KC_NO,  KC_RALT,          KC_RGUI,
+             KC_LALT,        KC_ESC,
+             KC_PGUP,
+             MO(SYMB), KC_TAB, KC_ENT
+    ),
+[RUSSIAN] = LAYOUT_ergodox(
+       // left hand
+       KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+       KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_BSLS,
+       KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+       KC_LSFT,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+          KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+                                       KC_TRNS,KC_TRNS,
+                                               KC_TRNS,
+                               KC_TRNS,KC_TRNS,KC_TRNS,
+       // right hand
+       KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+       KC_RBRC, KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_P   ,KC_LBRC,
+                KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_SCLN,KC_QUOT,
+       KC_TRNS, KC_TRNS,KC_TRNS /*RSIGNS*/ ,KC_TRNS,KC_TRNS,KC_TRNS,KC_RSFT,
+                        KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+       KC_TRNS, KC_TRNS,
+       KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS
+),
+[SYMB] = LAYOUT_ergodox(
+       // left hand
+       KC_TRNS,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5, KC_F6,
+       KC_TRNS,KC_EXLM,KC_AT,  KC_HASH,KC_DLR,KC_PERC,KC_TRNS,
+       KC_TRNS,KC_LABK,KC_LBRC,KC_LCBR,KC_LPRN,KC_GRV,
+       KC_TRNS,KC_TRNS,KC_TRNS,KC_QUES,KC_TILD,KC_TRNS,KC_TRNS,
+          KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+                                       RGB_MOD,KC_TRNS,
+                                               KC_TRNS,
+                               RGB_VAD,RGB_VAI,KC_TRNS,
+       // right hand
+       KC_TRNS, KC_F7,   KC_F8,  KC_F9,   KC_F10,   KC_F11,  KC_F12,
+       KC_TRNS, KC_CIRC,   KC_AMPR,   KC_ASTR,    KC_MINS,    KC_PLUS, KC_TRNS,
+                TD(QUOTES_DBLQUOTES),KC_RPRN,KC_RCBR,KC_RBRC,KC_RABK,KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,
+                         KC_TRNS,KC_TRNS,  KC_TRNS,    KC_TRNS,  KC_TRNS,
+       RGB_TOG, RGB_SLD,
+       KC_TRNS,
+       KC_TRNS, RGB_HUD, RGB_HUI
+),
+[NAVI] = LAYOUT_ergodox(
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                                           KC_TRNS, KC_TRNS,
+                                                    KC_TRNS,
+                                  KC_TRNS, KC_TRNS, KC_TRNS,
+    // right hand
+       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_TRNS, KC_TRNS,
+                 KC_LEFT, KC_DOWN, KC_UP  , KC_RIGHT, KC_TRNS, KC_TRNS,
+       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS,
+       KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS
+)
 };
 
 
@@ -210,6 +305,43 @@ oneshot_state os_ctrl_state = os_up_unqueued;
 oneshot_state os_alt_state = os_up_unqueued;
 oneshot_state os_cmd_state = os_up_unqueued;
 
+void update_lang(uint16_t keycode, keyrecord_t *record) {
+  uint16_t HYPER = MOD_BIT(KC_LSFT) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LCTL) | MOD_BIT(KC_LGUI);
+  switch (keycode) {
+    case SWITCH_RUSSIAN: {
+      if (!record->event.pressed) {
+        layer_on(RUSSIAN);
+        register_mods(HYPER);
+        register_code(KC_EQL);
+        unregister_code(KC_EQL);
+        unregister_mods(HYPER);
+      }
+      break;
+    }
+    case SWITCH_ENGLISH: {
+      if (!record->event.pressed) {
+        layer_off(RUSSIAN);
+        register_mods(HYPER);
+        register_code16(ALL_T(KC_MINS));
+        unregister_code16(ALL_T(KC_MINS));
+        unregister_mods(HYPER);
+      }
+
+      break;
+    }
+  }
+}
+
+void updata_rgb(uint16_t keycode, keyrecord_t *record) {
+    if (keycode == RGB_SLD) {
+      if (record->event.pressed) {
+      #ifdef RGBLIGHT_ENABLE
+        rgblight_mode(1);
+      #endif
+      }
+    }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     update_swapper(
         &sw_win_active, KC_LCMD, KC_TAB, SW_WIN, OS_SHFT,
@@ -237,9 +369,100 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         keycode, record
     );
 
+    #ifdef RGBLIGHT_ENABLE
+    updata_rgb(keycode, record);
+    #endif
+
+    update_lang(keycode, record);
+
     return true;
 }
 
+
+
+
+void setup_lights(uint32_t state) {
+  ergodox_board_led_off();
+  ergodox_right_led_1_off();
+  ergodox_right_led_2_off();
+  ergodox_right_led_3_off();
+
+  uint8_t layer = biton32(state);
+  switch (layer) {
+      case 0:
+        #ifdef RGBLIGHT_COLOR_LAYER_0
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
+        #else
+        #ifdef RGBLIGHT_ENABLE
+          rgblight_init();
+        #endif
+        #endif
+        break;
+      case 1:
+        ergodox_right_led_1_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_1
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_1);
+        #endif
+        break;
+      case 2:
+        ergodox_right_led_2_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_2
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_2);
+        #endif
+        break;
+      case 3:
+        ergodox_right_led_3_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_3
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_3);
+        #endif
+        break;
+      case 4:
+        ergodox_right_led_1_on();
+        ergodox_right_led_2_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_4
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_4);
+        #endif
+        break;
+      case 5:
+        ergodox_right_led_1_on();
+        ergodox_right_led_3_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_5
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_5);
+        #endif
+        break;
+      case 6:
+        ergodox_right_led_2_on();
+        ergodox_right_led_3_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_6
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_6);
+        #endif
+        break;
+      case 7:
+        ergodox_right_led_1_on();
+        ergodox_right_led_2_on();
+        ergodox_right_led_3_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_7
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_7);
+        #endif
+        break;
+      default:
+        break;
+    }
+
+}
+
 layer_state_t layer_state_set_user(layer_state_t state) {
+    setup_lights(state);
     return update_tri_layer_state(state, _SYM, _NAV, _NUM);
 }
+
+
+void matrix_init_user(void) {
+#ifdef RGBLIGHT_COLOR_LAYER_0
+  rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
+#endif
+};
+
+tap_dance_action_t tap_dance_actions[] = {
+  [QUOTES_DBLQUOTES]  = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_DQUO)
+};
