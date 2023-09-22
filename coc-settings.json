@@ -81,6 +81,7 @@
     "dimelets",
     "dttm",
     "elems",
+    "ergodox",
     "esmeid",
     "exprlit",
     "favicon",
@@ -122,6 +123,7 @@
     "jweak",
     "keepalive",
     "keyfiles",
+    "keymap",
     "keypair",
     "kion",
     "lobj",
@@ -176,7 +178,8 @@
     "wsrx",
     "wstx",
     "zeroize",
-    "zxcvbn"
+    "zxcvbn",
+    "коммита"
   ],
   "snippets.ultisnips.pythonPrompt": false,
   "cSpell.enabledLanguageIds": [

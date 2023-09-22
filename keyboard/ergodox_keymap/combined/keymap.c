@@ -14,8 +14,8 @@
 
 // #define PIPE S(KC_BSLS)
 // #define DPIPE S(RALT(KC_BSLS))
-#define GRV KC_GRV        // `
-#define TILD S(KC_GRV)       // ~
+#define GRV KC_NUBS        // `
+#define TILD S(KC_NUBS)       // ~
 // #define BSL RALT(KC_BSLS)
 #define COMMA KC_LBRC // ,
 #define DOT KC_RBRC // .
@@ -47,18 +47,18 @@
 #define TAB_R C(KC_TAB)
 
 enum layers {
-    _DEF,
-    _GAM,
+    _DEF, // 0 
+    _GAM, 
     _GFN,
     _SYM,
     _NAV,
     _NUM,
-    _ALT,
+    _ALT, //6
 
-    BASE,
-    RUSSIAN,
-    SYMB,
-    NAVI
+    BASE, //7
+    RUSSIAN, //8
+    SYMB, // 9
+    NAVI // 10
 
 };
 
@@ -87,10 +87,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_Q,     KC_W,     KC_E,   KC_R,    KC_T,     KC_NO, 
         KC_NO,   KC_A,     KC_S,     KC_D,   KC_F,    KC_G,
         KC_NO,   KC_Z,     KC_X,     KC_C,   KC_V,    KC_B,     KC_NO, 
-        KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_ESC,
+        KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_NO,
                                                       KC_NO,    DF(BASE),  
                                                                 KC_NO, 
-                                             LA_NAV,  KC_SPC,  KC_ESC,
+                                             KC_ESC,  KC_SPC,  LA_NAV,
 
         // right hand
         KC_NO,   KC_NO,   KC_NO,  KC_NO,    KC_NO,   KC_NO,     KC_NO,
@@ -104,24 +104,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 [_SYM] = LAYOUT_ergodox(
        // left hand
-        KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_NO,   KC_NO,    KC_NO, 
-        KC_NO,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,       KC_NO, 
-        KC_NO,   SCLN,    GRV,     QUOT,    DQUOT,   KC_MINS,
-        KC_NO,   BSLS,    KC_NO,   SCLN,    COMMA ,  KC_UNDS,    KC_NO, 
+        KC_NO,   KC_NO,   KC_NO,    KC_NO,   KC_NO,   KC_NO,    KC_NO, 
+        KC_NO,   S(KC_1), S(KC_2),  S(KC_3), S(KC_4), S(KC_5),  KC_NO, 
+        KC_NO,   SCLN,    GRV,      QUOT,    DQUOT,   KC_MINS,
+        KC_NO,   BSLS,    TILD,    SCLN,    COMMA ,  KC_UNDS,    KC_NO, 
         KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_NO,
                                                       KC_NO,    KC_NO,  
                                                                 KC_NO, 
-                                             KC_NO,  KC_NO,  KC_NO,
+                                             KC_TRNS,  KC_TRNS,  KC_TRNS,
 
         // right hand
         KC_NO,   KC_NO,   KC_NO,  KC_NO,    KC_NO,   KC_NO,     KC_NO,
-        KC_NO,   KC_6,    KC_7,    KC_8,    KC_9,    KC_0,      KC_NO,
+        KC_NO,   S(KC_6), S(KC_7),S(KC_8),  S(KC_9), S(KC_0),  KC_NO,
                  KC_PLUS, OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,    KC_NO,
         KC_NO,   KC_EQL,  DOT,     CLN,     KC_NO,   SLSH,      KC_NO,
                           KC_NO,  KC_NO,    KC_NO,   KC_NO,     KC_NO,
         KC_NO,   KC_NO,
         KC_NO,
-        KC_NO,   KC_NO,  KC_NO
+        KC_TRNS,   KC_TRNS,  KC_TRNS
 ),
 [_NAV] = LAYOUT_ergodox(
        // left hand
@@ -132,28 +132,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_NO,
                                                       KC_NO,    KC_NO,  
                                                                 KC_NO, 
-                                             KC_NO,  KC_NO,  KC_NO,
+                                             KC_TRNS,  KC_TRNS,  KC_TRNS,
 
         // right hand
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,     KC_NO,
         KC_NO,   KC_ESC,  KC_HOME, KC_END,  KC_BSPC, KC_DEL,     KC_NO,
-                 KC_ENT,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,    KC_NO,
+                 KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,    KC_NO,
         KC_NO,   KC_TAB,  KC_PGUP, KC_PGDN, XXXXXXX, XXXXXXX,    KC_NO,
                           KC_NO,  KC_NO,    KC_NO,   KC_NO,     KC_NO,
         KC_NO,   KC_NO,
         KC_NO,
-        KC_NO,   KC_NO,  KC_NO
+        KC_TRNS,   KC_TRNS,  KC_TRNS
 ),
 [_NUM] = LAYOUT_ergodox(
        // left hand
         KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_NO,   KC_NO,    KC_NO, 
-        KC_NO,   KC_P1,   KC_P2,   KC_P3,   KC_P4,   KC_P5,   KC_NO, 
+        KC_NO,   KC_1,   KC_P2,   KC_P3,   KC_P4,   KC_P5,   KC_NO, 
         KC_NO,   OS_CMD,  OS_ALT,  OS_CTRL, OS_SHFT, KC_F11,
         KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_NO, 
         KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_NO,
                                                       KC_NO,    KC_NO,  
                                                                 KC_NO, 
-                                             KC_NO,  KC_NO,  KC_NO,
+                                             KC_TRNS,  KC_TRNS,  KC_TRNS,
 
         // right hand
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,     KC_NO,
@@ -163,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           KC_NO,  KC_NO,    KC_NO,   KC_NO,     KC_NO,
         KC_NO,   KC_NO,
         KC_NO,
-        KC_NO,   KC_NO,  KC_NO
+        KC_TRNS,   KC_TRNS,  KC_TRNS
 ),
 [_ALT] = LAYOUT_ergodox(
        // left hand
@@ -222,7 +222,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
        KC_RBRC, KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_P   ,KC_LBRC,
                 KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_SCLN,KC_QUOT,
-       KC_TRNS, KC_TRNS,KC_TRNS /*RSIGNS*/ ,KC_TRNS,KC_TRNS,KC_TRNS,KC_RSFT,
+       KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_RSFT,
                         KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
@@ -398,51 +398,29 @@ void setup_lights(uint32_t state) {
         #endif
         #endif
         break;
-      case 1:
+      case 8:
         ergodox_right_led_1_on();
         #ifdef RGBLIGHT_COLOR_LAYER_1
           rgblight_setrgb(RGBLIGHT_COLOR_LAYER_1);
         #endif
         break;
-      case 2:
+      case 9:
         ergodox_right_led_2_on();
         #ifdef RGBLIGHT_COLOR_LAYER_2
           rgblight_setrgb(RGBLIGHT_COLOR_LAYER_2);
         #endif
         break;
-      case 3:
+      case 10:
         ergodox_right_led_3_on();
         #ifdef RGBLIGHT_COLOR_LAYER_3
           rgblight_setrgb(RGBLIGHT_COLOR_LAYER_3);
         #endif
         break;
-      case 4:
+      case 11:
         ergodox_right_led_1_on();
         ergodox_right_led_2_on();
         #ifdef RGBLIGHT_COLOR_LAYER_4
           rgblight_setrgb(RGBLIGHT_COLOR_LAYER_4);
-        #endif
-        break;
-      case 5:
-        ergodox_right_led_1_on();
-        ergodox_right_led_3_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_5
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_5);
-        #endif
-        break;
-      case 6:
-        ergodox_right_led_2_on();
-        ergodox_right_led_3_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_6
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_6);
-        #endif
-        break;
-      case 7:
-        ergodox_right_led_1_on();
-        ergodox_right_led_2_on();
-        ergodox_right_led_3_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_7
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_7);
         #endif
         break;
       default:

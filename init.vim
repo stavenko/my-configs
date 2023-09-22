@@ -48,6 +48,7 @@ set cindent
 "set foldmethod=syntax
 "set foldlevelstart=1
 set formatoptions=jctql
+set backspace=0
 
 
 " This little command enables <enter> key to complete word using autocomplete
@@ -80,7 +81,7 @@ let g:vim_markdown_folding_disabled = 1
 
 let g:grep_exclude_dirs=['node_modules', '.git']
 let g:nvim_typescript#default_mappings=0
-let g:nvim_typescript#debug_enabled=1
+let g:nvim_typescript#debug_enabled=1 
 let g:nvim_typescript#diagnostics_enable = 1
 let g:deoplete#enable_at_startup = 1
 let g:syntastic_check_on_open=1
