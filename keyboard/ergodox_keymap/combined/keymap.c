@@ -31,13 +31,13 @@
 
 // Brackets
 #define LBRK A(KC_F) // left bracket (
-#define LSBK A(KC_D) // left square bracket [
-#define LCBK A(KC_S) // left curly bracket {
+#define LCBK A(KC_D) // left curly bracket {
+#define LSBK A(KC_S) // left square bracket [
 #define LABK A(KC_A) // left angle bracket <
                         //
 #define RBRK A(KC_J) // left bracket (
-#define RSBK A(KC_K) // left square bracket [
-#define RCBK A(KC_L) // left curly bracket {
+#define RCBK A(KC_K) // left curly bracket {
+#define RSBK A(KC_L) // left square bracket [
 #define RABK A(KC_SCLN) // left angle bracket <
 
 #define SPACE_L C(KC_LEFT)
@@ -45,6 +45,19 @@
 
 #define TAB_L C(S(KC_TAB))
 #define TAB_R C(KC_TAB)
+
+
+// Features to adapt plan:
+// 1. move backspace on symb with opt, set bcsp KC_NO
+// 2. move russian keycodes щ з х
+// 2.a use it for 1-2 weeks
+// 
+// 2. move esc to backspace - use for 1-2 week
+// 2. move ent, tab to SYMB+G
+// 3. Adapt
+//
+// 4. Create alt layer for brackets - put it on enter
+// 5. remove brackets from symb layer
 
 enum layers {
     _DEF, // 0 
@@ -196,7 +209,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LGUI,KC_LALT,      KC_NO,  KC_MEH, KC_ESC,
                                               DF(_DEF),  KC_LGUI,
                                                               KC_HOME,
-                                               KC_SPC,KC_BSPC,MO(SYMB),
+                                               KC_SPC, KC_NO, MO(SYMB),
         // right hand
              SWITCH_ENGLISH,     KC_6,   KC_7,  KC_8,   KC_9,   KC_0,             KC_MINS,
              KC_RBRC,      KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,             KC_BSLS,
@@ -229,17 +242,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 [SYMB] = LAYOUT_ergodox(
        // left hand
-       KC_TRNS,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5, KC_F6,
-       KC_TRNS,KC_EXLM,KC_AT,  KC_HASH,KC_DLR,KC_PERC,KC_TRNS,
-       KC_TRNS,KC_LABK,KC_LBRC,KC_LCBR,KC_LPRN,KC_GRV,
-       KC_TRNS,KC_TRNS,KC_TRNS,KC_QUES,KC_TILD,KC_TRNS,KC_TRNS,
+       KC_NO,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO, KC_NO,
+       KC_NO,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO, KC_NO,
+       KC_TRNS, KC_LABK,KC_LBRC,KC_LCBR,KC_LPRN,KC_GRV,
+       KC_TRNS, KC_TRNS,KC_TRNS,KC_QUES,KC_TILD,KC_TRNS,KC_TRNS,
           KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
                                        RGB_MOD,KC_TRNS,
                                                KC_TRNS,
                                RGB_VAD,RGB_VAI,KC_TRNS,
        // right hand
-       KC_TRNS, KC_F7,   KC_F8,  KC_F9,   KC_F10,   KC_F11,  KC_F12,
-       KC_TRNS, KC_CIRC,   KC_AMPR,   KC_ASTR,    KC_MINS,    KC_PLUS, KC_TRNS,
+       KC_NO,  KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_NO,  KC_NO,
+       KC_NO,  KC_NO,   KC_NO,  KC_NO,    A(KC_BSPC),    KC_NO, KC_NO,
                 TD(QUOTES_DBLQUOTES),KC_RPRN,KC_RCBR,KC_RBRC,KC_RABK,KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,
                          KC_TRNS,KC_TRNS,  KC_TRNS,    KC_TRNS,  KC_TRNS,
