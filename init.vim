@@ -101,6 +101,8 @@ let g:coc_global_extensions=[
  \]
  
 imap <C-l> <Plug>(coc-snippets-expand)
+imap <Esc><BS> <C-w>
+cmap <Esc><BS> <C-w>
 
 " Use <C-j> for select text for visual placeholder of snippet.
 vmap <C-j> <Plug>(coc-snippets-select)
