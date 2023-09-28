@@ -210,7 +210,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LGUI,KC_LALT,      KC_NO,  KC_MEH, KC_ESC,
                                               DF(_DEF),  KC_LGUI,
                                                               KC_NO,
-                                               KC_SPC, KC_SPC, MO(SYMB),
+                                               KC_SPC, KC_SPC, OSL(SYMB),
         // right hand
              SWITCH_ENGLISH,     KC_6,   KC_7,  KC_8,   KC_9,   KC_0,             KC_MINS,
              KC_RBRC,      KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,             KC_BSLS,
@@ -219,7 +219,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   KC_ESC, KC_MEH,KC_NO,  KC_RALT,          KC_RGUI,
              KC_LALT,        KC_ESC,
              KC_PGUP,
-             MO(SYMB), KC_TAB, KC_ENT
+             OSL(SYMB), KC_TAB, KC_ENT
     ),
 [RUSSIAN] = LAYOUT_ergodox(
        // left hand
@@ -243,10 +243,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 [SYMB] = LAYOUT_ergodox(
        // left hand
-       KC_NO,   KC_NO,        KC_NO,  KC_NO,  KC_NO,  KC_NO, KC_NO,
-       KC_NO,   KC_NO,        KC_NO,  KC_NO,  KC_NO,  KC_NO, KC_NO,
-       KC_NO,   KC_NO,        KC_NO,  KC_NO,  KC_NO,  KC_NO,
-       KC_NO,   KC_NO,  MO(ALT_ERGO), KC_NO,  KC_NO,  KC_NO, KC_NO,
+       KC_NO,   KC_NO,  KC_NO,  KC_NO,  KC_NO,       KC_NO, KC_NO,
+       KC_NO,   KC_NO, KC_NO,  KC_NO,  KC_NO,        KC_NO, KC_NO,
+       KC_NO,   S(KC_GRV),  KC_GRV,    KC_QUOT, S(KC_QUOT),  KC_MINS,
+       KC_NO,   BSLS,  OSL(ALT_ERGO), KC_NO,  KC_NO, KC_UNDS, KC_NO,
           KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
                                        RGB_MOD,KC_TRNS,
                                                KC_TRNS,
@@ -254,8 +254,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        // right hand
        KC_NO,  KC_NO,   KC_NO,  KC_NO,  KC_NO,        KC_NO, KC_NO,
        KC_NO,  KC_NO,   KC_NO,  KC_NO,  A(KC_BSPC),   KC_NO, KC_NO,
-               KC_NO,   KC_NO,  KC_NO,  KC_NO,        KC_NO, KC_NO,
-       KC_NO,  KC_NO,   KC_NO,   KC_NO,  MO(ALT_ERGO), KC_NO, KC_NO,
+               KC_NO,   OS_SHFT,  OS_CTRL,  OS_ALT,        OS_CMD, KC_NO,
+       KC_NO,  KC_NO,   KC_NO,   KC_NO,  OSL(ALT_ERGO), KC_NO, KC_NO,
                         KC_NO,KC_NO,  KC_NO,   KC_NO, KC_NO,
        RGB_TOG, RGB_SLD,
        KC_TRNS,
@@ -282,20 +282,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS, RGB_HUD, RGB_HUI
 ),
 [NAVI] = LAYOUT_ergodox(
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                                           KC_TRNS, KC_TRNS,
-                                                    KC_TRNS,
-                                  KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+       KC_NO, KC_NO, OSL(ALT_ERGO), KC_NO, KC_NO, KC_NO, KC_NO,
+       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+                                           KC_NO, KC_NO,
+                                                    KC_NO,
+                                  KC_NO, KC_NO, KC_NO,
     // right hand
-       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_TRNS, KC_TRNS,
-                 KC_LEFT, KC_DOWN, KC_UP  , KC_RIGHT, KC_TRNS, KC_TRNS,
-       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+       KC_NO,  KC_NO, KC_NO, KC_NO, A(KC_BSPC), KC_NO, KC_NO,
+                 KC_LEFT, KC_DOWN, KC_UP  , KC_RIGHT, KC_NO, KC_NO,
+       KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+                          KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS
