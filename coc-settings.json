@@ -39,6 +39,7 @@
     "Imap",
     "KHTML",
     "Lbsv",
+    "MESG",
     "Mgts",
     "Mrmsk",
     "NANOSECS",
@@ -81,6 +82,7 @@
     "deserialization",
     "deserializers",
     "dimelets",
+    "downcastable",
     "dttm",
     "elems",
     "entrypoint",
@@ -184,7 +186,15 @@
     "wstx",
     "zeroize",
     "zxcvbn",
-    "коммита"
+    "бойлреплейта",
+    "енама",
+    "залогированы",
+    "имплементацию",
+    "имплементированы",
+    "коммита",
+    "неконсистентная",
+    "сериализованные",
+    "трейта"
   ],
   "snippets.ultisnips.pythonPrompt": false,
   "cSpell.enabledLanguageIds": [

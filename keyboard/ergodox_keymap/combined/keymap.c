@@ -7,10 +7,12 @@
 
 #define XXXX KC_NONE
 
-#define LA_SYM MO(_SYM)
-#define LA_ALT MO(_ALT)
-#define LA_NAV MO(_NAV)
-#define LA_GFN MO(_GFN)
+#define LA_SYM   MO(_SYM)
+#define LA_SYM_O MO(SYMB)
+#define LA_ALT   MO(_ALT)
+#define LA_NAV   MO(_NAV)
+#define LA_NAV_O MO(NAVI)
+#define LA_GFN   MO(_GFN)
 
 // #define PIPE S(KC_BSLS)
 // #define DPIPE S(RALT(KC_BSLS))
@@ -46,18 +48,6 @@
 #define TAB_L C(S(KC_TAB))
 #define TAB_R C(KC_TAB)
 
-
-// Features to adapt plan:
-// 1. move backspace on symb with opt, set bcsp KC_NO
-// 2. move russian keycodes щ з х
-// 2.a use it for 1-2 weeks
-// 
-// 2. move esc to backspace - use for 1-2 week
-// 2. move ent, tab to SYMB+G
-// 3. Adapt
-//
-// 4. Create alt layer for brackets - put it on enter
-// 5. remove brackets from symb layer
 
 enum layers {
     _DEF, // 0 
@@ -200,31 +190,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_NO,  KC_NO
   ),
 
-
 [BASE] = LAYOUT_ergodox(  // Old layout
         // left hand
         KC_EQL,         KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   SWITCH_RUSSIAN,
         KC_NO,        KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   KC_TILD,
-        MO(NAVI),        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
+        KC_NO,        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
         KC_LSFT,        CTL_T(KC_Z),  KC_X,   KC_C,   KC_V,   KC_B,   KC_HYPR,
-        KC_LGUI,KC_LALT,      KC_NO,  KC_MEH, KC_ESC,
+        KC_LGUI,KC_LALT,      KC_NO,  KC_MEH, SFT_T(KC_ESC),
                                               DF(_DEF),  KC_LGUI,
                                                               KC_NO,
-                                               KC_SPC, KC_SPC, OSL(SYMB),
+                                               KC_SPC, KC_SPC, MO(NAVI),
         // right hand
              SWITCH_ENGLISH,     KC_6,   KC_7,  KC_8,   KC_9,   KC_0,             KC_MINS,
              KC_RBRC,      KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,             KC_BSLS,
-                            KC_H,   KC_J,  KC_K,   KC_L,   KC_SCLN, KC_QUOT ,
-             KC_HYPR,  KC_N,  KC_M,  KC_COMM,KC_DOT, CTL_T(KC_SLSH),   KC_RSFT,
-                                  KC_ESC, KC_MEH,KC_NO,  KC_RALT,          KC_RGUI,
-             KC_LALT,        KC_ESC,
+                            KC_H,   KC_J,  KC_K,   KC_L,   CLN, KC_QUOT ,
+             KC_HYPR,  KC_N,  KC_M,  COMMA, DOT, CTL_T(SLSH),   KC_RSFT,
+                                  SFT_T(KC_ESC), KC_MEH,KC_NO,  KC_RALT,          KC_RGUI,
+             KC_LALT,        SFT_T(KC_ESC),
              KC_PGUP,
-             OSL(SYMB), KC_TAB, KC_ENT
+             MO(SYMB), MO(ALT_ERGO), KC_NO
     ),
+
 [RUSSIAN] = LAYOUT_ergodox(
        // left hand
        KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
-       KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_BSLS,
+       KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
        KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
        KC_LSFT,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
           KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
@@ -232,30 +222,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                KC_TRNS,
                                KC_TRNS,KC_TRNS,KC_TRNS,
        // right hand
-       KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
-       KC_RBRC, KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_P   ,KC_LBRC,
-                KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_SCLN,KC_QUOT,
-       KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_RSFT,
-                        KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+       KC_TRNS, KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,KC_TRNS,
+       KC_RBRC, KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_P   ,KC_LBRC,
+                KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_SCLN,KC_QUOT,
+       KC_TRNS, KC_TRNS,KC_TRNS, KC_COMM, KC_DOT,  CTL_T(KC_SLSH),KC_RSFT,
+                        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,KC_TRNS,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS
 ),
 [SYMB] = LAYOUT_ergodox(
        // left hand
-       KC_NO,   KC_NO,  KC_NO,  KC_NO,  KC_NO,       KC_NO, KC_NO,
-       KC_NO,   KC_NO, KC_NO,  KC_NO,  KC_NO,        KC_NO, KC_NO,
-       KC_NO,   S(KC_GRV),  KC_GRV,    KC_QUOT, S(KC_QUOT),  KC_MINS,
-       KC_NO,   BSLS,  OSL(ALT_ERGO), KC_NO,  KC_NO, KC_UNDS, KC_NO,
+       KC_NO,   KC_NO,  KC_NO,  KC_NO,   KC_NO,          KC_NO, KC_NO,
+       KC_NO,   KC_NO,  KC_NO,  KC_NO,   KC_NO,          KC_NO, KC_NO,
+       KC_NO,   TILD,   GRV,    KC_QUOT, S(KC_QUOT),     KC_MINS,
+       KC_NO,   BSLS,   KC_NO,  SCLN,    COMMA, KC_UNDS, KC_NO,
           KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
                                        RGB_MOD,KC_TRNS,
                                                KC_TRNS,
                                RGB_VAD,RGB_VAI,KC_TRNS,
        // right hand
        KC_NO,  KC_NO,   KC_NO,  KC_NO,  KC_NO,        KC_NO, KC_NO,
-       KC_NO,  KC_NO,   KC_NO,  KC_NO,  A(KC_BSPC),   KC_NO, KC_NO,
-               KC_NO,   OS_SHFT,  OS_CTRL,  OS_ALT,        OS_CMD, KC_NO,
-       KC_NO,  KC_NO,   KC_NO,   KC_NO,  OSL(ALT_ERGO), KC_NO, KC_NO,
+       KC_NO,  KC_NO,   KC_NO,  KC_NO,  A(KC_BSPC),   KC_BSPC, KC_NO,
+               KC_PLUS,   OS_SHFT,  OS_CTRL,  OS_ALT,  OS_CMD, KC_NO,
+       KC_NO,  KC_EQL,   DOT,   CLN,  KC_NO, SLSH, KC_NO,
                         KC_NO,KC_NO,  KC_NO,   KC_NO, KC_NO,
        RGB_TOG, RGB_SLD,
        KC_TRNS,
@@ -263,39 +253,40 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 [ALT_ERGO] = LAYOUT_ergodox(
        // left hand
-       KC_NO,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO, KC_NO,
-       KC_NO,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO, KC_NO,
-       KC_TRNS, KC_LABK,KC_LBRC,KC_LCBR,KC_LPRN,KC_GRV,
-       KC_TRNS, KC_TRNS,KC_TRNS,KC_QUES,KC_TILD,KC_TRNS,KC_TRNS,
-          KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
+       KC_NO,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,   KC_NO,
+       KC_NO,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  A(KC_T), KC_NO,
+       KC_NO,   LABK,   LSBK,   LCBK,   LBRK,   KC_NO,
+       KC_NO,   KC_NO,  KC_TRNS,KC_NO,  KC_NO,  KC_TRNS, KC_TRNS,
+          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
                                        RGB_MOD,KC_TRNS,
                                                KC_TRNS,
                                RGB_VAD,RGB_VAI,KC_TRNS,
        // right hand
-       KC_NO,  KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_NO,  KC_NO,
-       KC_NO,  KC_NO,   KC_NO,  KC_NO,    A(KC_BSPC),    KC_NO, KC_NO,
-                TD(QUOTES_DBLQUOTES),KC_RPRN,KC_RCBR,KC_RBRC,KC_RABK,KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,
+       KC_NO,  KC_NO,   KC_NO,  KC_NO,   KC_NO,     KC_NO,   KC_NO,
+       KC_NO,  KC_NO,   KC_NO,  A(KC_I), KC_NO,     KC_NO,   KC_NO,
+               KC_NO,   RBRK,   RCBK,    RSBK,      RABK,    KC_NO,
+       KC_TRNS, KC_TRNS,A(KC_M), KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,
                          KC_TRNS,KC_TRNS,  KC_TRNS,    KC_TRNS,  KC_TRNS,
        RGB_TOG, RGB_SLD,
        KC_TRNS,
        KC_TRNS, RGB_HUD, RGB_HUI
 ),
 [NAVI] = LAYOUT_ergodox(
-       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-       KC_NO, KC_NO, OSL(ALT_ERGO), KC_NO, KC_NO, KC_NO, KC_NO,
-       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+       KC_NO,   KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO,
+       KC_NO,   KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO,
+       KC_NO,   OS_CMD,   OS_ALT,  OS_CTRL, OS_SHFT, KC_ENT,
+       KC_TRNS, KC_TRNS,  KC_NO,   KC_NO,   KC_NO,   KC_TAB, KC_NO,
+       KC_TRNS, KC_TRNS,  KC_NO,   KC_NO,   KC_NO,   
+
                                            KC_NO, KC_NO,
                                                     KC_NO,
                                   KC_NO, KC_NO, KC_NO,
     // right hand
        KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-       KC_NO,  KC_NO, KC_NO, KC_NO, A(KC_BSPC), KC_NO, KC_NO,
+       KC_NO,  KC_NO, KC_NO, KC_NO, KC_BSPC, KC_NO, KC_NO,
                  KC_LEFT, KC_DOWN, KC_UP  , KC_RIGHT, KC_NO, KC_NO,
        KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-                          KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+                          KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS
@@ -306,7 +297,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
     case LA_SYM:
+    case LA_SYM_O:
     case LA_NAV:
+    case LA_NAV_O:
     case LA_ALT:
         return true;
     default:
@@ -317,7 +310,9 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
 bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
     case LA_SYM:
+    case LA_SYM_O:
     case LA_NAV:
+    case LA_NAV_O:
     case LA_ALT:
     case KC_LSFT:
     case OS_SHFT:

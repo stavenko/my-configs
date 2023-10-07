@@ -108,7 +108,7 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ]; then . "/Users/vasilijstavenko/Downloads/google-cloud-sdk/path.zsh.inc"; fi
+if [ -f '/Users/vgstav10/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/vgstav10/Downloads/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"; fi
+if [ -f '/Users/vgstav10/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/vgstav10/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
