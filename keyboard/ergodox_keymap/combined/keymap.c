@@ -55,14 +55,15 @@ enum layers {
     _GFN,
     _SYM,
     _NAV,
-    _NUM,
     _ALT, //6
 
     BASE, //7
     RUSSIAN, //8
     SYMB, // 9
     ALT_ERGO, // 9
-    NAVI // 10
+    NAVI, // 10
+         //
+    _NUM
 
 };
 
@@ -147,27 +148,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,
         KC_TRNS,   KC_TRNS,  KC_TRNS
 ),
-[_NUM] = LAYOUT_ergodox(
-       // left hand
-        KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_NO,   KC_NO,    KC_NO, 
-        KC_NO,   KC_1,   KC_P2,   KC_P3,   KC_P4,   KC_P5,   KC_NO, 
-        KC_NO,   OS_CMD,  OS_ALT,  OS_CTRL, OS_SHFT, KC_F11,
-        KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_NO, 
-        KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_NO,
-                                                      KC_NO,    KC_NO,  
-                                                                KC_NO, 
-                                             KC_TRNS,  KC_TRNS,  KC_TRNS,
-
-        // right hand
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,     KC_NO,
-        KC_NO,   KC_P6,   KC_P7,   KC_P8,   KC_P9,   KC_P0,    KC_NO,
-                 KC_F12,  OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,   KC_NO,
-        KC_NO,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_NO,
-                          KC_NO,  KC_NO,    KC_NO,   KC_NO,     KC_NO,
-        KC_NO,   KC_NO,
-        KC_NO,
-        KC_TRNS,   KC_TRNS,  KC_TRNS
-),
 [_ALT] = LAYOUT_ergodox(
        // left hand
         KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_NO,   KC_NO,    KC_NO, 
@@ -192,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [BASE] = LAYOUT_ergodox(  // Old layout
         // left hand
-        KC_EQL,         KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   SWITCH_RUSSIAN,
+        KC_NO,         KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   SWITCH_RUSSIAN,
         KC_NO,        KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   KC_TILD,
         KC_NO,        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
         KC_LSFT,        CTL_T(KC_Z),  KC_X,   KC_C,   KC_V,   KC_B,   KC_HYPR,
@@ -201,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                               KC_NO,
                                                KC_SPC, KC_SPC, MO(NAVI),
         // right hand
-             SWITCH_ENGLISH,     KC_6,   KC_7,  KC_8,   KC_9,   KC_0,             KC_MINS,
+             SWITCH_ENGLISH,     KC_6,   KC_7,  KC_8,   KC_9,   KC_0, KC_NO,
              KC_RBRC,      KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,             KC_BSLS,
                             KC_H,   KC_J,  KC_K,   KC_L,   CLN, KC_QUOT ,
              KC_HYPR,  KC_N,  KC_M,  COMMA, DOT, CTL_T(SLSH),   KC_RSFT,
@@ -234,7 +214,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [SYMB] = LAYOUT_ergodox(
        // left hand
        KC_NO,   KC_NO,  KC_NO,  KC_NO,   KC_NO,          KC_NO, KC_NO,
-       KC_NO,   KC_NO,  KC_NO,  KC_NO,   KC_NO,          KC_NO, KC_NO,
+       KC_NO,   S(KC_1),  S(KC_2),  S(KC_3),   S(KC_4),  S(KC_5), KC_NO,
        KC_NO,   TILD,   GRV,    KC_QUOT, S(KC_QUOT),     KC_MINS,
        KC_NO,   BSLS,   KC_NO,  SCLN,    COMMA, KC_UNDS, KC_NO,
           KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
@@ -243,7 +223,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                RGB_VAD,RGB_VAI,KC_TRNS,
        // right hand
        KC_NO,  KC_NO,   KC_NO,  KC_NO,  KC_NO,        KC_NO, KC_NO,
-       KC_NO,  KC_NO,   KC_NO,  KC_NO,  A(KC_BSPC),   KC_BSPC, KC_NO,
+       KC_NO,  S(KC_6),   S(KC_7),  S(KC_8),  S(KC_9),   S(KC_0), KC_NO,
                KC_PLUS,   OS_SHFT,  OS_CTRL,  OS_ALT,  OS_CMD, KC_NO,
        KC_NO,  KC_EQL,   DOT,   CLN,  KC_NO, SLSH, KC_NO,
                         KC_NO,KC_NO,  KC_NO,   KC_NO, KC_NO,
@@ -273,23 +253,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 [NAVI] = LAYOUT_ergodox(
        KC_NO,   KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO,
-       KC_NO,   KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO,
+       KC_NO,   KC_NO,    KC_NO,   KC_NO,   KC_NO,   SWITCH_RUSSIAN, KC_NO,
        KC_NO,   OS_CMD,   OS_ALT,  OS_CTRL, OS_SHFT, KC_ENT,
        KC_TRNS, KC_TRNS,  KC_NO,   KC_NO,   KC_NO,   KC_TAB, KC_NO,
        KC_TRNS, KC_TRNS,  KC_NO,   KC_NO,   KC_NO,   
 
                                            KC_NO, KC_NO,
                                                     KC_NO,
-                                  KC_NO, KC_NO, KC_NO,
+                                  KC_TRNS, KC_TRNS, KC_TRNS,
     // right hand
        KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-       KC_NO,  KC_NO, KC_NO, KC_NO, KC_BSPC, KC_NO, KC_NO,
-                 KC_LEFT, KC_DOWN, KC_UP  , KC_RIGHT, KC_NO, KC_NO,
+       KC_NO,  SWITCH_ENGLISH, KC_NO, KC_NO, KC_BSPC, KC_NO, KC_NO,
+               KC_LEFT, KC_DOWN, KC_UP  , KC_RIGHT, KC_NO, KC_NO,
        KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
                           KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS
+),
+[_NUM] = LAYOUT_ergodox(
+       // left hand
+        KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_NO,   KC_NO,    KC_NO, 
+        KC_NO,   KC_1,   KC_P2,   KC_P3,   KC_P4,   KC_P5,   KC_NO, 
+        KC_NO,   OS_CMD,  OS_ALT,  OS_CTRL, OS_SHFT, KC_F11,
+        KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_NO, 
+        KC_NO,   KC_NO,    KC_NO,    KC_NO,  KC_NO,
+                                                      KC_NO,    KC_NO,  
+                                                                KC_NO, 
+                                             KC_TRNS,  KC_TRNS,  KC_TRNS,
+
+        // right hand
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,     KC_NO,
+        KC_NO,   KC_P6,   KC_P7,   KC_P8,   KC_P9,   KC_P0,    KC_NO,
+                 KC_F12,  OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,   KC_NO,
+        KC_NO,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_NO,
+                          KC_NO,  KC_NO,    KC_NO,   KC_NO,     KC_NO,
+        KC_NO,   KC_NO,
+        KC_NO,
+        KC_TRNS,   KC_TRNS,  KC_TRNS
 )
 };
 
@@ -459,7 +460,7 @@ void setup_lights(uint32_t state) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     setup_lights(state);
-    return update_tri_layer_state(state, _SYM, _NAV, _NUM);
+    return update_tri_layer_state(state, SYMB, NAVI, _NUM);
 }
 
 
