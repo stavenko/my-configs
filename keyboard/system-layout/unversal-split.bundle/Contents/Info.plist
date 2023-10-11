@@ -8,25 +8,25 @@
 	<string>unversal-split</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>KLInfo_Англ-сплит</key>
+	<key>KLInfo_eng-split</key>
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
 		<key>TISIconIsTemplate</key>
 		<false/>
 		<key>TISInputSourceID</key>
-		<string>org.sil.ukelele.keyboardlayout.русская-сплит.англ-сплит</string>
+		<string>org.sil.ukelele.keyboardlayout.русская-сплит.eng-split</string>
 		<key>TISIntendedLanguage</key>
-		<string>en</string>
+		<string>en-Zsym</string>
 	</dict>
-	<key>KLInfo_Русская-сплит</key>
+	<key>KLInfo_rus-split</key>
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
 		<key>TISIconIsTemplate</key>
 		<false/>
 		<key>TISInputSourceID</key>
-		<string>org.sil.ukelele.keyboardlayout.русская-сплит.русская-сплит</string>
+		<string>org.sil.ukelele.keyboardlayout.русская-сплит.rus-split</string>
 		<key>TISIntendedLanguage</key>
 		<string>ru</string>
 	</dict>

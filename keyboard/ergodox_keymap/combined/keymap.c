@@ -10,6 +10,7 @@
 #define LA_SYM   MO(_SYM)
 #define LA_SYM_O MO(SYMB)
 #define LA_ALT   MO(_ALT)
+#define LA_ALT_E MO(ALT_ERGO)
 #define LA_NAV   MO(_NAV)
 #define LA_NAV_O MO(NAVI)
 #define LA_GFN   MO(_GFN)
@@ -184,11 +185,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              SWITCH_ENGLISH,     KC_6,   KC_7,  KC_8,   KC_9,   KC_0, KC_NO,
              KC_RBRC,      KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,             KC_BSLS,
                             KC_H,   KC_J,  KC_K,   KC_L,   CLN, KC_QUOT ,
-             KC_HYPR,  KC_N,  KC_M,  KC_COMM, DOT, CTL_T(SLSH),   KC_RSFT,
+             KC_HYPR,  KC_N,  KC_M,  KC_COMM, KC_DOT, CTL_T(SLSH),   KC_RSFT,
                                   SFT_T(KC_ESC), KC_MEH,KC_NO,  KC_RALT,          KC_RGUI,
              KC_LALT,        SFT_T(KC_ESC),
              KC_PGUP,
-             MO(SYMB), MO(ALT_ERGO), KC_NO
+             MO(SYMB), LA_ALT_E, KC_NO
     ),
 
 [RUSSIAN] = LAYOUT_ergodox(
