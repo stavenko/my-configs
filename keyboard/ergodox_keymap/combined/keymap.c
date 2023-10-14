@@ -8,11 +8,11 @@
 #define XXXX KC_NONE
 
 #define LA_SYM   MO(_SYM)
-#define LA_SYM_O MO(SYMB)
+#define LA_SYM_O LT(SYMB, KC_SPC)
 #define LA_ALT   MO(_ALT)
 #define LA_ALT_E MO(ALT_ERGO)
 #define LA_NAV   MO(_NAV)
-#define LA_NAV_O MO(NAVI)
+#define LA_NAV_O LT(NAVI, KC_SPC)
 #define LA_GFN   MO(_GFN)
 
 // #define PIPE S(KC_BSLS)
@@ -50,6 +50,11 @@
 #define TAB_R C(KC_TAB)
 
 
+enum keyboard_side {
+  LEFT, RIGHT, UNSPECIFIED
+
+};
+
 enum layers {
     _DEF, // 0 
     _GAM, 
@@ -63,7 +68,6 @@ enum layers {
     SYMB, // 9
     ALT_ERGO, // 9
     NAVI, // 10
-         //
     _NUM
 
 };
@@ -84,6 +88,8 @@ enum keycodes {
     RGB_SLD,
     SWITCH_RUSSIAN,
     SWITCH_ENGLISH,
+    LEFT_SPACE,
+    RIGHT_SPACE,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -173,23 +179,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [BASE] = LAYOUT_ergodox(  // Old layout
         // left hand
-        KC_NO,         KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   SWITCH_RUSSIAN,
+        KC_NO,        KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   SWITCH_RUSSIAN,
         KC_NO,        KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   KC_TILD,
         KC_NO,        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
-        KC_LSFT,        CTL_T(KC_Z),  KC_X,   KC_C,   KC_V,   KC_B,   KC_HYPR,
-        KC_LGUI,KC_LALT,      KC_NO,  KC_MEH, SFT_T(KC_ESC),
+        KC_LSFT,      CTL_T(KC_Z),  KC_X,   KC_C,   KC_V,   KC_B,   KC_HYPR,
+        KC_LGUI,KC_LALT,      KC_NO,  KC_MEH, KC_ESC,
                                               DF(_DEF),  KC_LGUI,
                                                               KC_NO,
-                                               KC_SPC, KC_SPC, MO(NAVI),
+                                               KC_LSFT, LA_NAV_O, KC_NO,
         // right hand
              SWITCH_ENGLISH,     KC_6,   KC_7,  KC_8,   KC_9,   KC_0, KC_NO,
              KC_RBRC,      KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,             KC_BSLS,
                             KC_H,   KC_J,  KC_K,   KC_L,   CLN, KC_QUOT ,
              KC_HYPR,  KC_N,  KC_M,  KC_COMM, KC_DOT, CTL_T(SLSH),   KC_RSFT,
-                                  SFT_T(KC_ESC), KC_MEH,KC_NO,  KC_RALT,          KC_RGUI,
-             KC_LALT,        SFT_T(KC_ESC),
+                                  LA_ALT_E, KC_MEH,KC_NO,  KC_RALT,          KC_RGUI,
+             KC_LALT,        KC_NO,
              KC_PGUP,
-             MO(SYMB), LA_ALT_E, KC_NO
+             KC_NO, LA_SYM_O, KC_RSFT
     ),
 
 [RUSSIAN] = LAYOUT_ergodox(
@@ -203,10 +209,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                KC_TRNS,
                                KC_TRNS,KC_TRNS,KC_TRNS,
        // right hand
-       KC_TRNS, KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,KC_TRNS,
-       KC_TRNS, KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_P   ,KC_LBRC,
-                KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_SCLN,KC_QUOT,
-       KC_TRNS, KC_TRNS,KC_TRNS, KC_TRNS, KC_DOT,  CTL_T(KC_SLSH),KC_RSFT,
+       KC_TRNS, KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,       KC_TRNS,
+       KC_TRNS, KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_P   ,       KC_TRNS,
+                KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_SCLN,       KC_TRNS,
+       KC_TRNS, KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS,  CTL_T(KC_SLSH),KC_TRNS,
                         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,KC_TRNS,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
@@ -221,7 +227,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
                                        RGB_MOD,KC_TRNS,
                                                KC_TRNS,
-                               RGB_VAD,RGB_VAI,KC_TRNS,
+                               KC_TRNS, KC_TRNS, KC_TRNS,
        // right hand
        KC_NO,  KC_NO,   KC_NO,  KC_NO,  KC_NO,        KC_NO, KC_NO,
        KC_NO,  S(KC_6),   S(KC_7),  S(KC_8),  S(KC_9),   S(KC_0), KC_NO,
@@ -234,14 +240,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 [ALT_ERGO] = LAYOUT_ergodox(
        // left hand
-       KC_NO,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,   KC_NO,
-       KC_NO,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  A(KC_T), KC_NO,
-       KC_NO,   LABK,   LSBK,   LCBK,   LBRK,   KC_NO,
-       KC_NO,   KC_NO,  KC_TRNS,KC_NO,  KC_NO,  KC_TRNS, KC_TRNS,
+       KC_TRNS,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,   KC_NO,
+       KC_TRNS,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  A(KC_T), KC_NO,
+       KC_TRNS,   LABK,   LSBK,   LCBK,   LBRK,   KC_NO,
+       KC_TRNS,   KC_NO,  KC_TRNS,KC_NO,  KC_NO,  KC_TRNS, KC_TRNS,
           KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
                                        RGB_MOD,KC_TRNS,
                                                KC_TRNS,
-                               RGB_VAD,RGB_VAI,KC_TRNS,
+                               KC_TRNS,KC_TRNS,KC_TRNS,
        // right hand
        KC_NO,  KC_NO,   KC_NO,  KC_NO,   KC_NO,     KC_NO,   KC_NO,
        KC_NO,  KC_NO,   KC_NO,  A(KC_I), KC_NO,     KC_NO,   KC_NO,
@@ -372,6 +378,95 @@ void updata_rgb(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+
+uint8_t last_button_side = UNSPECIFIED;
+
+
+void update_keyboard_side(uint16_t keycode, keyrecord_t *record) {
+  if (record->event.pressed) { 
+    last_button_side = UNSPECIFIED;
+    switch (keycode) {
+      case KC_Q:
+      case KC_W:
+      case KC_E:
+      case KC_R:
+      case KC_T:
+
+      case KC_A:
+      case KC_S:
+      case KC_D:
+      case KC_F:
+      case KC_G:
+
+      case KC_Z:
+      case KC_X:
+      case KC_C:
+      case KC_V:
+      case KC_B:
+
+      case KC_1:
+      case KC_2:
+      case KC_3:
+      case KC_4:
+      case KC_5:
+        last_button_side = LEFT;
+        break;
+      case KC_Y:
+      case KC_U:
+      case KC_I:
+      case KC_O:
+      case KC_P:
+
+      case KC_H:
+      case KC_J:
+      case KC_K:
+      case KC_L:
+      case KC_SCLN:
+
+      case KC_N:
+      case KC_M:
+      case KC_COMM:
+      case KC_DOT:
+      case KC_SLSH:
+
+      case KC_6:
+      case KC_7:
+      case KC_8:
+      case KC_9:
+      case KC_0:
+        last_button_side = RIGHT;
+        break;
+
+    }
+  }
+
+}
+
+void process_spaces(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case RIGHT_SPACE:
+      {
+      uint8_t can_emit = (last_button_side == LEFT || last_button_side == UNSPECIFIED);
+      if (record->event.pressed && can_emit) {
+        register_code(KC_SPC);
+        unregister_code(KC_SPC);
+      }
+      break;
+      }
+    case LEFT_SPACE:
+      {
+      uint8_t can_emit = last_button_side == RIGHT || last_button_side == UNSPECIFIED;
+      if (record->event.pressed && can_emit) {
+        register_code(KC_SPC);
+        unregister_code(KC_SPC);
+      }
+      break;
+      }
+  }
+  update_keyboard_side(keycode, record);
+
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     update_swapper(
         &sw_win_active, KC_LCMD, KC_TAB, SW_WIN, OS_SHFT,
@@ -404,6 +499,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     #endif
 
     update_lang(keycode, record);
+
+    process_spaces(keycode, record);
 
     return true;
 }

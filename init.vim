@@ -19,73 +19,19 @@ Plug 'junegunn/fzf.vim'
 Plug 'honza/vim-snippets'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'vimwiki/vimwiki'
+Plug 'michal-h21/vim-zettel'
+
 call plug#end()
+
+let g:vimwiki_list = [{'path':'~/projects/notes/','ext':'.md','syntax':'markdown','path_html':'~/projects/notes/html/'}]
+let g:zettel_options = [{"disable_front_matter": 1,"front_matter" : [],  "template" :  "~/projects/my-configs/my-zettel-template.tpl"}]
+let g:zettel_format = "%d.%m.%y/%H%M%S"
+let g:zettel_fzf_command = "rg --column --line-number --ignore-case --no-heading --color=always"
+
 
 autocmd filetype markdown syn region math start=/\$\$/ end=/\$\$/
 autocmd filetype markdown syn match math '\$[^$].\{-}\$'
-
-lua << EOF
-  local nvim_tree = require "nvim-tree"
-  nvim_tree.setup {
-    sync_root_with_cwd = true,
-    view = {
-      mappings = {
-        list = {
-          {key ="cd", action="cd"}
-        }
-      }
-    }
-  }
-  vim.lsp.set_log_level 'debug'
-EOF
-
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  textobjects = {
-    select = {
-      enable = true,
-
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
-
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["aa"] = "@parameter.outer",
-        ["ia"] = "@parameter.inner",
-        -- ["ac"] = "@class.outer",
-        -- You can optionally set descriptions to the mappings (used in the desc parameter of
-        -- nvim_buf_set_keymap) which plugins like which-key display
-        -- ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-        -- You can also use captures from other query groups like `locals.scm`
-        -- ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-      },
-      -- You can choose the select mode (default is charwise 'v')
-      --
-      -- Can also be a function which gets passed a table with the keys
-      -- * query_string: eg '@function.inner'
-      -- * method: eg 'v' or 'o'
-      -- and should return the mode ('v', 'V', or '<c-v>') or a table
-      -- mapping query_strings to modes.
-      selection_modes = {
-        ['@parameter.outer'] = 'v', -- charwise
-        -- ['@function.outer'] = 'V', -- linewise
-        -- ['@class.outer'] = '<c-v>', -- blockwise
-      },
-      -- If you set this to `true` (default is `false`) then any textobject is
-      -- extended to include preceding or succeeding whitespace. Succeeding
-      -- whitespace has priority in order to act similarly to eg the built-in
-      -- `ap`.
-      --
-      -- Can also be a function which gets passed a table with the keys
-      -- * query_string: eg '@function.inner'
-      -- * selection_mode: eg 'v'
-      -- and should return true of false
-      include_surrounding_whitespace = true,
-    },
-  },
-}
-EOF
-
 
 syntax on
 set shiftwidth=2
@@ -103,7 +49,9 @@ set backspace=0
 " This little command enables <enter> key to complete word using autocomplete
 " menu
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>" 
+inoremap <expr> <c-н> "\<c-y>"
 
+" Esc works as expected in terminal buffer.
 :tnoremap <Esc> <C-\><C-n>
 
 autocmd FileType typescript.tsx setl shiftwidth=2 tabstop=2
@@ -149,6 +97,9 @@ let g:coc_global_extensions=[
  \'coc-snippets'
  \]
  
+set langmap=ЙЦУКЕ;QWERT,ФЫВАП;ASDFG,ЯЧСМИ;ZXCVB,НГШЗХ;YUIOP,РОЛД;HJKL,ТЬ;NM,йцуке;qwert,фывап;asdfg,ячсми;zxcvb,нгшзх;yuiop,ролд;hjkl,ть;nm
+" set keymap=russian-ergodox "
+
 imap <C-l> <Plug>(coc-snippets-expand)
 imap <Esc><BS> <C-w>
 cmap <Esc><BS> <C-w>
@@ -156,7 +107,7 @@ cmap <Esc><BS> <C-w>
 " Use <C-j> for select text for visual placeholder of snippet.
 vmap <C-j> <Plug>(coc-snippets-select)
 
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+" Use <C-j> for jump to next placeholder; it's default of coc.nvim
 let g:coc_snippet_next = '<c-j>'
 
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
@@ -259,7 +210,7 @@ command! -range VGREPFV :call GrepBufferCommandSelection()
 vmap <silent> <leader>8 :VGREPFV<cr>
 nmap <silent> <leader>8 :call GrepBufferCommandSearch()<cr>
  
-vnoremap * y/<C-r>"<cr>
+vnoremap * y/<C-r>"<cr> " Copy selection to search buffer
  
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -335,6 +286,88 @@ autocmd BufNewFile,BufRead *.scenario   set syntax=yaml
 " location list hot keys
 nmap <silent> <leader>q :CocList diagnostics<CR>
 nmap <silent> <leader>m :CocCommand rust-analyzer.parentModule<CR>
+nmap <silent> <leader>rm :CocCommand rust-analyzer.parentModule<CR>
+nmap <silent> <leader>rc :CocCommand rust-analyzer.expandMacro<CR>
+nmap <silent> <leader>rr :CocCommand rust-analyzer.reloadWorkspace<CR>
 
 vmap <leader>z <Plug>(coc-codeaction-selected)
 nmap <leader>z <Plug>(coc-codeaction-selected) 
+nmap <silent> <leader>vv :Git<cr>
+nmap <silent> <leader>vp :Git push<cr>
+nmap <silent> <leader>vfp :Git push --force<cr>
+
+nmap <leader>xn :ZettelNew<cr>
+nmap <leader>xo :ZettelOpen<cr>
+nmap <leader>xs :ZettelSearch<cr>
+
+map <leader>gt :tag <c-r><c-w><cr>
+nnoremap <F2> :w!<CR>
+nnoremap <F10> :q!<CR>
+
+lua << EOF
+
+local nvim_tree = require "nvim-tree"
+local function my_on_attach(bufnr)
+  local api = require "nvim-tree.api"
+  local function opts(desc)
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  -- default mappings
+  api.config.mappings.default_on_attach(bufnr)
+
+  -- custom mappings
+  vim.keymap.set('n', 'cd', api.tree.change_root_to_node,        opts('CD'))
+
+end
+nvim_tree.setup {
+  sync_root_with_cwd = true,
+  on_attach = my_on_attach,
+}
+vim.lsp.set_log_level 'debug'
+
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+      enable = true,
+
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+        -- ["ac"] = "@class.outer",
+        -- You can optionally set descriptions to the mappings (used in the desc parameter of
+        -- nvim_buf_set_keymap) which plugins like which-key display
+        -- ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+        -- You can also use captures from other query groups like `locals.scm`
+        -- ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+      },
+      -- You can choose the select mode (default is charwise 'v')
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * method: eg 'v' or 'o'
+      -- and should return the mode ('v', 'V', or '<c-v>') or a table
+      -- mapping query_strings to modes.
+      selection_modes = {
+        ['@parameter.outer'] = 'v', -- charwise
+        -- ['@function.outer'] = 'V', -- linewise
+        -- ['@class.outer'] = '<c-v>', -- blockwise
+      },
+      -- If you set this to `true` (default is `false`) then any textobject is
+      -- extended to include preceding or succeeding whitespace. Succeeding
+      -- whitespace has priority in order to act similarly to eg the built-in
+      -- `ap`.
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * selection_mode: eg 'v'
+      -- and should return true of false
+      include_surrounding_whitespace = true,
+    },
+  },
+}
+EOF
