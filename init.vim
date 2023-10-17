@@ -26,7 +26,7 @@ call plug#end()
 
 let g:vimwiki_list = [{'path':'~/projects/notes/','ext':'.md','syntax':'markdown','path_html':'~/projects/notes/html/'}]
 let g:zettel_options = [{"disable_front_matter": 1,"front_matter" : [],  "template" :  "~/projects/my-configs/my-zettel-template.tpl"}]
-let g:zettel_format = "%d.%m.%y/%H%M%S"
+let g:zettel_format = "%d.%m.%y-%H%M%S"
 let g:zettel_fzf_command = "rg --column --line-number --ignore-case --no-heading --color=always"
 
 
@@ -292,16 +292,15 @@ nmap <silent> <leader>rr :CocCommand rust-analyzer.reloadWorkspace<CR>
 
 vmap <leader>z <Plug>(coc-codeaction-selected)
 nmap <leader>z <Plug>(coc-codeaction-selected) 
-nmap <silent> <leader>vv :Git<cr>
-nmap <silent> <leader>vp :Git push<cr>
-nmap <silent> <leader>vfp :Git push --force<cr>
+nmap <leader>vv :Git 
 
 nmap <leader>xn :ZettelNew<cr>
 nmap <leader>xo :ZettelOpen<cr>
 nmap <leader>xs :ZettelSearch<cr>
 
 map <leader>gt :tag <c-r><c-w><cr>
-nnoremap <F2> :w!<CR>
+nnoremap <F2> :wall!<CR>
+inoremap <F2> <esc>:wall!<CR>
 nnoremap <F10> :q!<CR>
 
 lua << EOF

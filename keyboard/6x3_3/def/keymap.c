@@ -42,6 +42,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define HS     LALT(KC_M)  
 #define YO     LALT(KC_T) 
 #define SCHA   LALT(KC_I)  
+#define HR   RSG(KC_SPC)  
+#define HRS   RSG(KC_J)  
+
+#define LA_EL    LT(ALT_ERGO_LEFT, CLN)
+#define LA_EL_RU LT(ALT_ERGO_LEFT, KC_SCLN)
+#define LA_ER    LT(ALT_ERGO_RIGHT, KC_A)
 
 // Brackets
 #define LBRK A(KC_F) // left bracket (
@@ -63,6 +69,8 @@ enum layers {
     RUSSIAN, //8
     SYMB, // 9
     ALT_ERGO, // 9
+    ALT_ERGO_LEFT, // 9
+    ALT_ERGO_RIGHT, // 9
     NAVI, // 10
     _NUM
 
@@ -84,25 +92,25 @@ enum keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_split_3x6_3(
-      KC_NO  ,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P   , KC_NO  ,
-      KC_NO  ,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,   CLN    , KC_NO,
-      KC_LSFT,  CTL_Z ,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT,   CTL_SL , KC_RSFT,
-                                          KC_ESC,   KC_LSFT,  LA_NAV,     LA_SYM , KC_RSFT, LA_ALT
+      KC_NO  ,  KC_Q, KC_W, KC_E, KC_R, KC_T,                  KC_Y, KC_U, KC_I,     KC_O,   KC_P,   KC_NO,
+      KC_NO  ,  LA_ER, KC_S, KC_D, KC_F, KC_G,                 KC_H, KC_J, KC_K,     KC_L,   LA_EL,  KC_NO,
+      KC_LSFT, CTL_Z, KC_X, KC_C, KC_V, KC_B,                  KC_N, KC_M, KC_COMM,  KC_DOT, CTL_SL, KC_RSFT,
+                          KC_NO,   KC_LSFT,  LA_NAV,     LA_SYM , KC_RSFT, LA_ALT
 
   ),
 
     [RUSSIAN] = LAYOUT_split_3x6_3(
-      TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, KC_P   ,       TRNS,                   
-      TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, KC_SCLN,       TRNS,
+      TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, TRNS   ,       TRNS,                   
+      TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, LA_EL_RU,       TRNS,
       TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, CTL_T(KC_SLSH),TRNS,
                                           TRNS, TRNS,  TRNS,     TRNS,   TRNS, TRNS
   ),
 
     [SYMB] = LAYOUT_split_3x6_3(
-      KC_NO,      S(KC_1),  S(KC_2),  S(KC_3), S(KC_4),    S(KC_5),                      S(KC_6),   S(KC_7),  S(KC_8),  S(KC_9),   S(KC_0), KC_NO,
-      KC_NO,      TILD,     GRV,     KC_QUOT,  S(KC_QUOT), KC_MINS,                      KC_PLUS,   OS_SHFT,  OS_CTRL,  OS_ALT,    OS_CMD,  KC_NO,
-      KC_NO,      BSLS,     KC_NO,   SCLN,     COMMA,      KC_UNDS,                      KC_EQL,    DOT,      CLN,      KC_NO,     SLSH,    KC_NO,
-                                          TRNS,   TRNS,  TRNS,     TRNS, TRNS, TRNS
+      KC_NO, S(KC_1),S(KC_2),  S(KC_3), S(KC_4),    S(KC_5),                      S(KC_6),   S(KC_7),  S(KC_8),  S(KC_9),   S(KC_0), KC_NO,
+      KC_NO, TILD,   GRV,     KC_QUOT,  S(KC_QUOT), KC_MINS,                      KC_PLUS,   OS_SHFT,  OS_CTRL,  OS_ALT,    OS_CMD,  KC_NO,
+      KC_NO, BSLS,   KC_NO,   SCLN,     COMMA,      KC_UNDS,                      KC_EQL,    DOT,      CLN,      KC_NO,     SLSH,    KC_NO,
+                          TRNS,   TRNS,  TRNS,     TRNS, TRNS, TRNS
   ),
 
     [ALT_ERGO] = LAYOUT_split_3x6_3(
@@ -111,10 +119,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       TRNS,   KC_NO,  TRNS,   KC_NO,  KC_NO,  TRNS,                        TRNS,    A(KC_M),TRNS,    TRNS,      TRNS,    TRNS,
                                           TRNS, TRNS,  TRNS,     TRNS, TRNS, TRNS
   ),
+    [ALT_ERGO_LEFT] = LAYOUT_split_3x6_3(
+      TRNS,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  A(KC_T),                     KC_NO, KC_NO,  A(KC_I), KC_NO, KC_NO, KC_NO,
+      TRNS,   LABK,   LSBK,   LCBK,   LBRK,   KC_NO,                       KC_NO, KC_NO,  KC_NO,   KC_NO, TRNS,  KC_NO,
+      TRNS,   KC_NO,  TRNS,   KC_NO,  KC_NO,  TRNS,                        TRNS,  A(KC_M),TRNS,    TRNS,  TRNS,  TRNS,
+                                          TRNS, TRNS,  TRNS,     TRNS, TRNS, TRNS
+  ),
+    [ALT_ERGO_RIGHT] = LAYOUT_split_3x6_3(
+      TRNS,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  A(KC_T),                     KC_NO,   KC_NO,  A(KC_I), KC_NO,     KC_NO,   KC_NO,
+      TRNS,   TRNS,   KC_NO,  KC_NO,  KC_NO,  KC_NO,                       KC_NO,   RBRK,   RCBK,    RSBK,      RABK,    KC_NO,
+      TRNS,   KC_NO,  TRNS,   KC_NO,  KC_NO,  TRNS,                        TRNS,    A(KC_M),TRNS,    TRNS,      TRNS,    TRNS,
+                                          TRNS, TRNS,  TRNS,     TRNS, TRNS, TRNS
+  ),
     [NAVI] = LAYOUT_split_3x6_3(
-      KC_NO,   KC_NO,    KC_NO,   KC_NO,   KC_NO,   SW_RUS,                      SW_ENG,  KC_NO,   KC_NO, KC_BSPC,  KC_NO,   KC_NO,
-      KC_NO,   OS_CMD,   OS_ALT,  OS_CTRL, OS_SHFT, KC_ENT,                      KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_NO,   KC_NO,
-      TRNS,    TRNS,     KC_NO,   KC_NO,   KC_NO,   KC_TAB,                      KC_NO,   KC_NO,   KC_NO, KC_NO,    KC_NO,   KC_NO,
+      KC_NO,   KC_ESC,   KC_NO,   KC_NO,   KC_NO,   SW_RUS,                      SW_ENG,  KC_NO,   KC_NO, KC_BSPC,  KC_NO,   KC_NO,
+      KC_NO,   OS_CMD,   OS_ALT,  OS_CTRL, OS_SHFT, KC_ENT,                      KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_SPC,  KC_NO,
+      TRNS,    KC_TAB,   KC_NO,   KC_NO,   KC_NO,   KC_TAB,                      HR,   HRS,   KC_NO, KC_NO,    KC_NO,   KC_NO,
                                           TRNS,   TRNS,  TRNS,     TRNS, TRNS, TRNS
   ),
   [_NUM] = LAYOUT_split_3x6_3(
