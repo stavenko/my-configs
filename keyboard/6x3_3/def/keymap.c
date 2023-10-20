@@ -115,19 +115,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [ALT_ERGO] = LAYOUT_split_3x6_3(
       TRNS,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  A(KC_T),                     KC_NO,   KC_NO,  A(KC_I), KC_NO,     KC_NO,   KC_NO,
-      TRNS,   LABK,   LSBK,   LCBK,   LBRK,   KC_NO,                       KC_NO,   RBRK,   RCBK,    RSBK,      RABK,    KC_NO,
+      TRNS,   LABK,   LSBK,   LCBK,   LBRK,   KC_QUOT,                       S(KC_QUOT),   RBRK,   RCBK,    RSBK,      RABK,    KC_NO,
       TRNS,   KC_NO,  TRNS,   KC_NO,  KC_NO,  TRNS,                        TRNS,    A(KC_M),TRNS,    TRNS,      TRNS,    TRNS,
                                           TRNS, TRNS,  TRNS,     TRNS, TRNS, TRNS
   ),
     [ALT_ERGO_LEFT] = LAYOUT_split_3x6_3(
       TRNS,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  A(KC_T),                     KC_NO, KC_NO,  A(KC_I), KC_NO, KC_NO, KC_NO,
-      TRNS,   LABK,   LSBK,   LCBK,   LBRK,   KC_NO,                       KC_NO, KC_NO,  KC_NO,   KC_NO, TRNS,  KC_NO,
+      TRNS,   LABK,   LSBK,   LCBK,   LBRK,   KC_QUOT,                       KC_NO, KC_NO,  KC_NO,   KC_NO, TRNS,  KC_NO,
       TRNS,   KC_NO,  TRNS,   KC_NO,  KC_NO,  TRNS,                        TRNS,  A(KC_M),TRNS,    TRNS,  TRNS,  TRNS,
                                           TRNS, TRNS,  TRNS,     TRNS, TRNS, TRNS
   ),
     [ALT_ERGO_RIGHT] = LAYOUT_split_3x6_3(
       TRNS,   KC_NO,  KC_NO,  KC_NO,  KC_NO,  A(KC_T),                     KC_NO,   KC_NO,  A(KC_I), KC_NO,     KC_NO,   KC_NO,
-      TRNS,   TRNS,   KC_NO,  KC_NO,  KC_NO,  KC_NO,                       KC_NO,   RBRK,   RCBK,    RSBK,      RABK,    KC_NO,
+      TRNS,   TRNS,   KC_NO,  KC_NO,  KC_NO,  KC_NO,                       S(KC_QUOT),   RBRK,   RCBK,    RSBK,      RABK,    KC_NO,
       TRNS,   KC_NO,  TRNS,   KC_NO,  KC_NO,  TRNS,                        TRNS,    A(KC_M),TRNS,    TRNS,      TRNS,    TRNS,
                                           TRNS, TRNS,  TRNS,     TRNS, TRNS, TRNS
   ),

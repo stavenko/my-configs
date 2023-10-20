@@ -303,6 +303,11 @@ nnoremap <F2> :wall!<CR>
 inoremap <F2> <esc>:wall!<CR>
 nnoremap <F10> :q!<CR>
 
+inoremap <c-j> ()<esc>i
+inoremap <c-k> {}<esc>i
+inoremap <c-l> []<esc>i
+inoremap <c-.> <><esc>i
+
 lua << EOF
 
 local nvim_tree = require "nvim-tree"

@@ -108,6 +108,7 @@
     "imsi",
     "insta",
     "isdn",
+    "iterchunks",
     "itertools",
     "jarray",
     "jboolean",
