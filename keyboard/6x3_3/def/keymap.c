@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LA_NAV LT(NAVI, KC_SPC)
 #define CTL_Z CTL_T(KC_Z)
 #define SLSH KC_BSLS // /
-#define CTL_SL CTL_T(SLSH)
+#define CTL_SL CTL_T(KC_SLSH)
 #define TRNS KC_TRNS
 
 
@@ -45,8 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define HR   RSG(KC_SPC)  
 #define HRS   RSG(KC_J)  
 
-#define LA_EL    LT(ALT_ERGO_LEFT, CLN)
-#define LA_EL_RU LT(ALT_ERGO_LEFT, KC_SCLN)
+#define LA_EL    LT(ALT_ERGO_LEFT, KC_SCLN)
 #define LA_ER    LT(ALT_ERGO_RIGHT, KC_A)
 
 // Brackets
@@ -69,8 +68,8 @@ enum layers {
     RUSSIAN, //8
     SYMB, // 9
     ALT_ERGO, // 9
-    ALT_ERGO_LEFT, // 9
     ALT_ERGO_RIGHT, // 9
+    ALT_ERGO_LEFT, // 9
     NAVI, // 10
     _NUM
 
@@ -100,9 +99,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
     [RUSSIAN] = LAYOUT_split_3x6_3(
-      TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, TRNS   ,       TRNS,                   
-      TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, LA_EL_RU,       TRNS,
-      TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, CTL_T(KC_SLSH),TRNS,
+      TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, TRNS,       TRNS,                   
+      TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, LA_EL,       TRNS,
+      TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, CTL_SL,TRNS,
                                           TRNS, TRNS,  TRNS,     TRNS,   TRNS, TRNS
   ),
 
@@ -135,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_NO,   KC_ESC,   KC_NO,   KC_NO,   KC_NO,   SW_RUS,                      SW_ENG,  KC_NO,   KC_NO, KC_BSPC,  KC_NO,   KC_NO,
       KC_NO,   OS_CMD,   OS_ALT,  OS_CTRL, OS_SHFT, KC_ENT,                      KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_SPC,  KC_NO,
       TRNS,    KC_TAB,   KC_NO,   KC_NO,   KC_NO,   KC_TAB,                      HR,   HRS,   KC_NO, KC_NO,    KC_NO,   KC_NO,
-                                          TRNS,   TRNS,  TRNS,     TRNS, TRNS, TRNS
+                                          QK_BOOT,   TRNS,  TRNS,     TRNS, TRNS, TRNS
   ),
   [_NUM] = LAYOUT_split_3x6_3(
       KC_NO,   KC_1,    KC_P2,   KC_P3,   KC_P4,   KC_P5,                       KC_P6,   KC_P7,   KC_P8,   KC_P9,   KC_P0,     KC_NO,
@@ -149,7 +148,10 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
     case LA_SYM:
     case LA_NAV:
+    case LEFT_SPACE:
+    case RIGHT_SPACE:
     case LA_ALT:
+      
         return true;
     default:
         return false;
@@ -166,6 +168,8 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
     case OS_CTRL:
     case OS_ALT:
     case OS_CMD:
+    case LEFT_SPACE:
+    case RIGHT_SPACE:
         return true;
     default:
         return false;
@@ -270,29 +274,57 @@ void update_keyboard_side(uint16_t keycode, keyrecord_t *record) {
   }
 
 }
+bool left_pressed = false;
+bool right_pressed = false;
+bool keys_pressed = false;
 
 void process_spaces(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case RIGHT_SPACE:
       {
-      uint8_t can_emit = (last_button_side == LEFT || last_button_side == UNSPECIFIED);
-      if (record->event.pressed && can_emit) {
-        register_code(KC_SPC);
-        unregister_code(KC_SPC);
+      {
+        if (record->event.pressed){
+          layer_on(SYMB);
+          right_pressed = true; 
+        } else {
+          layer_off(SYMB);
+          if (!keys_pressed && !left_pressed) {
+            register_code(KC_SPC);
+            unregister_code(KC_SPC);
+          }
+          right_pressed = false;
+          keys_pressed  = false;
+        }
+        break;
+        
       }
-      break;
       }
     case LEFT_SPACE:
       {
-      uint8_t can_emit = last_button_side == RIGHT || last_button_side == UNSPECIFIED;
-      if (record->event.pressed && can_emit) {
-        register_code(KC_SPC);
-        unregister_code(KC_SPC);
+        if (record->event.pressed){
+          layer_on(NAVI);
+          left_pressed = true;
+        } else {
+          layer_off(NAVI);
+          if (!keys_pressed && !right_pressed) {
+            register_code(KC_SPC);
+            unregister_code(KC_SPC);
+          }
+          left_pressed = false;
+          keys_pressed  = false;
+        }
+        break;
+        
       }
-      break;
+      default:
+      {
+        if (left_pressed || right_pressed) {
+          keys_pressed = true;
+        }
       }
+
   }
-  update_keyboard_side(keycode, record);
+  // update_keyboard_side(keycode, record);
 
 }
 

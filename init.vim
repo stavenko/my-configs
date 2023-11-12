@@ -25,6 +25,7 @@ Plug 'michal-h21/vim-zettel'
 call plug#end()
 
 let g:vimwiki_list = [{'path':'~/projects/notes/','ext':'.md','syntax':'markdown','path_html':'~/projects/notes/html/'}]
+let g:vimwiki_key_mappings =  {'lists_return': 0}
 let g:zettel_options = [{"disable_front_matter": 1,"front_matter" : [],  "template" :  "~/projects/my-configs/my-zettel-template.tpl"}]
 let g:zettel_format = "%d.%m.%y-%H%M%S"
 let g:zettel_fzf_command = "rg --column --line-number --ignore-case --no-heading --color=always"
@@ -97,8 +98,8 @@ let g:coc_global_extensions=[
  \'coc-snippets'
  \]
  
-set langmap=ЙЦУКЕ;QWERT,ФЫВАП;ASDFG,ЯЧСМИ;ZXCVB,НГШЗХ;YUIOP,РОЛД;HJKL,ТЬ;NM,йцуке;qwert,фывап;asdfg,ячсми;zxcvb,нгшзх;yuiop,ролд;hjkl,ть;nm
-" set keymap=russian-ergodox "
+" set langmap=ЙЦУКЕ;QWERT,ФЫВАП;ASDFG,ЯЧСМИ;ZXCVB,НГШЗХ;YUIOP,РОЛД;HJKL,ТЬ;NM,йцуке;qwert,фывап;asdfg,ячсми;zxcvb,нгшзх;yuiop,ролд;hjkl,ть;nm
+set keymap=russian-ergodox "
 
 imap <C-l> <Plug>(coc-snippets-expand)
 imap <Esc><BS> <C-w>
@@ -301,7 +302,8 @@ nmap <leader>xs :ZettelSearch<cr>
 map <leader>gt :tag <c-r><c-w><cr>
 nnoremap <F2> :wall!<CR>
 inoremap <F2> <esc>:wall!<CR>
-nnoremap <F10> :q!<CR>
+nnoremap <F10> :q<CR>
+inoremap <F10> <esc>:q<CR>
 
 inoremap <c-j> ()<esc>i
 inoremap <c-k> {}<esc>i
