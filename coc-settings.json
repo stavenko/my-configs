@@ -27,6 +27,7 @@
   "cSpell.userWords": [
     "BASEPOINT",
     "Backoff",
+    "Bezier",
     "Borsh",
     "Deque",
     "Deserializable",
@@ -57,6 +58,7 @@
     "Typeless",
     "UNDS",
     "Unprocessable",
+    "Wgpu",
     "actix",
     "appender",
     "autodoc",
@@ -119,6 +121,7 @@
     "impls",
     "imsi",
     "insta",
+    "ints",
     "isdn",
     "iterchunks",
     "itertools",
