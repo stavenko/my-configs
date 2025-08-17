@@ -11,14 +11,20 @@ Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 Plug 'rust-lang/rust.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 Plug 'stavenko/ergodox-keymap'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 Plug 'vimwiki/vimwiki'
+Plug 'jparise/vim-graphql'
 Plug 'michal-h21/vim-zettel'
+Plug 'sindrets/diffview.nvim'
+Plug 'joshuavial/aider.nvim'
+Plug 'shougo/ddu.vim'
+Plug 'towolf/vim-helm'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 call plug#end()
 
@@ -39,8 +45,6 @@ set number
 
 set expandtab
 set cindent
-"set foldmethod=syntax
-"set foldlevelstart=1
 set formatoptions=jctql
 
 
@@ -61,8 +65,8 @@ autocmd FileType rust setl shiftwidth=4 tabstop=4
 autocmd FileType markdown setl fo=twan1
 
 
-au FileType typescript map ˆ :TSDef <CR>
-au FileType typescript.tsx map ˆ :TSDef <CR>
+autocmd FileType typescript map ˆ :TSDef <CR>
+autocmd FileType typescript.tsx map ˆ :TSDef <CR>
 
 set colorcolumn=+1
 set textwidth=80
@@ -87,12 +91,16 @@ let g:coc_global_extensions=[
  \'coc-clangd', 
  \'coc-json', 
  \'coc-sql',
+ \'coc-pyright',
  \'coc-yaml',
+ \'coc-java',
  \'coc-emoji',
  \'coc-marketplace',
  \'coc-spell-checker',
  \'coc-cspell-dicts',
- \'coc-snippets'
+ \'coc-tsserver',
+ \'coc-snippets',
+ \'coc-eslint'
  \]
  
 " set langmap=ЙЦУКЕ;QWERT,ФЫВАП;ASDFG,ЯЧСМИ;ZXCVB,НГШЗХ;YUIOP,РОЛД;HJKL,ТЬ;NM,йцуке;qwert,фывап;asdfg,ячсми;zxcvb,нгшзх;yuiop,ролд;hjkl,ть;nm
@@ -117,7 +125,7 @@ nmap <leader>f :NvimTreeFindFile<CR>
 nmap <leader>j :CocList files<CR>
 " 
 set termguicolors
-set background=light
+set background=dark
 colorscheme flattened_dark
  
 set grepprg=""
@@ -295,8 +303,8 @@ nmap <leader>vv :Git
 nmap <leader>xn :ZettelNew<cr>
 nmap <leader>xo :ZettelOpen<cr>
 nmap <leader>xs :ZettelSearch<cr>
-
 map <leader>gt :tag <c-r><c-w><cr>
+
 nnoremap <F2> :wall!<CR>
 inoremap <F2> <esc>:wall!<CR>
 nnoremap <F10> :q<CR>
@@ -307,7 +315,29 @@ inoremap <c-k> {}<esc>i
 inoremap <c-l> []<esc>i
 inoremap <c-.> <><esc>i
 
+call ddu#custom#patch_global({
+    \ 'sources': [{'name': 'aider'}],
+    \ 'sourceOptions': {
+    \   'aider': {'matchers': ['matcher_substring']},
+    \ },
+    \ 'kindOptions': {
+    \   'aider': {
+    \     'defaultAction': 'add',
+    \   },
+    \ },
+    \ })
+
+nnoremap <silent> <Leader>ad <Cmd>call ddu#start({'sources': [{'name': 'aider'}]})<CR>
+
 lua << EOF
+
+
+require('aider').setup({
+  auto_manage_context = true,
+  default_bindings = true,
+  debug = true,
+  vim = true, 
+})
 
 local nvim_tree = require "nvim-tree"
 local function my_on_attach(bufnr)
@@ -328,4 +358,17 @@ nvim_tree.setup {
   on_attach = my_on_attach,
 }
 vim.lsp.set_log_level 'debug'
+
+require'nvim-treesitter.configs'.setup {
+  incremental_selection = {
+    enable = true
+  },
+  highlight = {
+    enable = true,
+  },
+  indent = {
+    enable = true
+  }
+}
+
 EOF

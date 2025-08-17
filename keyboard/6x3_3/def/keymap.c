@@ -23,9 +23,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LA_SYM LT(SYMB, KC_SPC)
 #define LA_ALT MO(ALT_ERGO)
 #define LA_NAV LT(NAVI, KC_SPC)
-#define CTL_Z CTL_T(KC_Z)
 #define SLSH KC_BSLS // /
 #define CTL_SL CTL_T(KC_SLSH)
+#define CTL_M CTL_T(KC_M)
+#define CTL_V CTL_T(KC_V)
+#define CTL_Z CTL_T(KC_Z)
 #define TRNS KC_TRNS
 
 
@@ -93,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_split_3x6_3(
       KC_NO  ,  KC_Q, KC_W, KC_E, KC_R, KC_T,                  KC_Y, KC_U, KC_I,     KC_O,   KC_P,   KC_NO,
       KC_NO  ,  LA_ER, KC_S, KC_D, KC_F, KC_G,                 KC_H, KC_J, KC_K,     KC_L,   LA_EL,  KC_NO,
-      KC_LSFT, CTL_Z, KC_X, KC_C, KC_V, KC_B,                  KC_N, KC_M, KC_COMM,  KC_DOT, CTL_SL, KC_RSFT,
+      KC_LSFT, KC_Z, KC_X, KC_C, CTL_V, KC_B,                  KC_N, CTL_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,
                           KC_ESC,   KC_LSFT,  LA_NAV,     LA_SYM , KC_RSFT, LA_ALT
 
   ),
@@ -101,13 +103,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [RUSSIAN] = LAYOUT_split_3x6_3(
       TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, TRNS,       TRNS,                   
       TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, LA_EL,       TRNS,
-      TRNS,       TRNS,    TRNS,    TRNS,    TRNS,    TRNS,                   TRNS,TRNS, TRNS, TRNS, CTL_SL,TRNS,
+      TRNS,       TRNS,    TRNS,    TRNS,    CTL_V,    TRNS,                   TRNS,CTL_M, TRNS, TRNS, KC_SLSH,TRNS,
                                           TRNS, TRNS,  TRNS,     TRNS,   TRNS, TRNS
   ),
 
     [SYMB] = LAYOUT_split_3x6_3(
       KC_NO, S(KC_1),S(KC_2),  S(KC_3), S(KC_4),    S(KC_5),                      S(KC_6),   S(KC_7),  S(KC_8),  S(KC_9),   S(KC_0), KC_NO,
-      KC_NO, TILD,   GRV,     KC_QUOT,  S(KC_QUOT), KC_MINS,                      KC_PLUS,   OS_SHFT,  OS_CTRL,  OS_ALT,    OS_CMD,  KC_NO,
+      KC_NO, TILD,   GRV,     KC_QUOT,  S(KC_QUOT), KC_MINS,                      KC_PLUS,   OS_CMD,  OS_CTRL,  OS_ALT,    OS_SHFT,  KC_NO,
       KC_NO, BSLS,   KC_NO,   SCLN,     COMMA,      KC_UNDS,                      KC_EQL,    DOT,      CLN,      KC_NO,     SLSH,    KC_NO,
                           TRNS,   TRNS,  TRNS,     TRNS, TRNS, TRNS
   ),
@@ -131,14 +133,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                           TRNS, TRNS,  TRNS,     TRNS, TRNS, TRNS
   ),
     [NAVI] = LAYOUT_split_3x6_3(
-      KC_NO,   KC_ESC,   KC_NO,   KC_NO,   KC_NO,   SW_RUS,                      SW_ENG,  KC_NO,   KC_NO, KC_BSPC,  KC_NO,   KC_NO,
-      KC_NO,   OS_CMD,   OS_ALT,  OS_CTRL, OS_SHFT, KC_ENT,                      KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_SPC,  KC_NO,
-      TRNS,    KC_TAB,   KC_NO,   KC_NO,   KC_NO,   KC_TAB,                      HR,   HRS,   KC_NO, KC_NO,    KC_NO,   KC_NO,
+      KC_NO,   KC_ESC,   KC_NO,    KC_NO, KC_NO,   SW_RUS,                      SW_ENG,  KC_NO,   KC_NO, KC_BSPC,  KC_DEL,   KC_NO,
+      KC_NO,   OS_SHFT,  OS_ALT,  OS_CTRL, OS_CMD, KC_ENT,                      KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_NO,  KC_NO,
+      TRNS, RCMD(KC_W),  KC_NO,   KC_NO,   KC_NO,   KC_TAB,                      HR,   HRS,   KC_NO, KC_NO,    KC_NO,   KC_NO,
                                           QK_BOOT,   TRNS,  TRNS,     TRNS, TRNS, TRNS
   ),
   [_NUM] = LAYOUT_split_3x6_3(
       KC_NO,   KC_1,    KC_P2,   KC_P3,   KC_P4,   KC_P5,                       KC_P6,   KC_P7,   KC_P8,   KC_P9,   KC_P0,     KC_NO,
-      KC_NO,   OS_CMD,  OS_ALT,  OS_CTRL, OS_SHFT, KC_F11,                      KC_F12,  OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,    KC_NO,
+      KC_NO,   OS_SHFT,  OS_ALT,  OS_CTRL, OS_CMD, KC_F11,                      KC_F12,  OS_CMD, OS_CTRL, OS_ALT,  OS_SHFT,    KC_NO,
       KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                       KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,    KC_NO,
                                           TRNS,   TRNS,  TRNS,         TRNS, TRNS, TRNS
   ),
