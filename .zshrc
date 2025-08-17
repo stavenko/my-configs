@@ -70,7 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew nvm docker rust helm kubectl minikube)
+plugins=(git brew nvm docker rust helm kubectl minikube oc)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -115,16 +115,32 @@ if [ -f '/Users/vgstav10/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then 
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+    if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
     else
-        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+        export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+#
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export NDK_HOME="$ANDROID_HOME/ndk/26.1.10909125"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools"
+export PATH="$PATH:$NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin"
 
+
+export PATH=/Users/vasilijstavenko/.tiup/bin:$PATH
+export PATH=/Users/vasilijstavenko/Library/Python/3.12/bin:$PATH
+
+# Created by `pipx` on 2024-05-29 08:41:34
+export PATH="$PATH:/Users/vasilijstavenko/.local/bin"
+# Source private configuration (contains API keys, tokens, etc.)
+# Copy .zshrc.private to ~/.zshrc.private and add your secrets there
+if [ -f "$HOME/.zshrc.private" ]; then
+    source "$HOME/.zshrc.private"
+fi
